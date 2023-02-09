@@ -1,0 +1,24 @@
+.card-box {
+  display: flex;
+  flex-direction: column;
+
+  background-color: aqua;
+}
+
+.card-container-top {
+  min-height: 178px;
+  background-color: #c7bebe;
+}
+
+.card-container-bottom {
+  display: flex;
+
+  padding: 20px;
+  background-color: #e7e7e7;
+}
+
+.card-container-bottom__top {
+}
+
+.card-container-bottom__bottom {
+}
