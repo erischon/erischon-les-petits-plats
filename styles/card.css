@@ -2,8 +2,10 @@
   display: flex;
   flex-direction: column;
 
-  max-width: 380px;
-  max-height: 364px;
+  -webkit-box-shadow: 0 0 6px hsla(0, 0%, 50%, 0.7);
+  box-shadow: 1px 1px 6px hsla(0, 2%, 50%, 0.7);
+
+  border-radius: 5px;
 }
 
 .card-container-top {
