@@ -1,2 +1,29 @@
+@import "normalize";
 @import "card.css";
 @import "results.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+body,
+html {
+  margin: 0 100px;
+  font-family: "Lato", sans-serif;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+p,
+ul,
+form {
+  margin: 0;
+  padding: 0;
+
+  font-weight: 400;
+}
