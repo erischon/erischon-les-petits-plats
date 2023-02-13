@@ -1,6 +1,9 @@
 @import "normalize";
-@import "card.css";
+@import "page.css";
 @import "results.css";
+@import "search.css";
+@import "tags.css";
+@import "card.css";
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
 
@@ -26,4 +29,14 @@ form {
   padding: 0;
 
   font-weight: 400;
+}
+
+button {
+  border: none;
+  margin: 0;
+  background-color: transparent;
+}
+
+.container {
+  margin-bottom: 20px;
 }

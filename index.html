@@ -29,36 +29,58 @@
     <title>Les petits plats</title>
   </head>
   <body>
-    <header
-      class="container d-flex justify-content-center align-items-center flex-column"
-    >
+    <header class="header-container container">
       <img src="./logo.svg" />
+
       <h2 class="text-danger">Les petits plats</h2>
     </header>
 
     <main class="home-page-container">
-      <section class="search-container">
-        <div class="input-group">
-          <input
-            class="form-control border-end-0 border bg-secondary"
-            type="search"
-            value="search"
-            id="search-input"
-          />
-          <span class="input-group-append">
-            <button
-              class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5"
-              type="button"
-            >
-              <i class="fa fa-search"></i>
-            </button>
-          </span>
+      <section class="search-container container">
+        <input
+          class="search-container__input"
+          type="search"
+          value="search"
+          id="search-input"
+        />
+
+        <button class="search-container__btn" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </section>
+
+      <section class="tags-container container">
+        <div class="tags-group">
+          <div class="tag bg-blue">
+            <span>Tag 1</span>
+            <i class="fa-regular fa-circle-xmark"></i>
+          </div>
+
+          <div class="tag bg-red">
+            <span>Tag 2</span>
+            <i class="fa-regular fa-circle-xmark"></i>
+          </div>
+        </div>
+
+        <div class="dropdown-group">
+          <div class="dropdown bg-blue">
+            <span>Ingredients</span>
+            <i class="fa fa-chevron-down"></i>
+          </div>
+
+          <div class="dropdown bg-green">
+            <span>Appareils</span>
+            <i class="fa fa-chevron-down"></i>
+          </div>
+
+          <div class="dropdown bg-red">
+            <span>Ustensiles</span>
+            <i class="fa fa-chevron-down"></i>
+          </div>
         </div>
       </section>
 
-      <section class="tags-container">Tags</section>
-
-      <section class="results-container">
+      <section class="results-container container">
         <article class="card-box">
           <div class="card-container-top"></div>
 
