@@ -23,7 +23,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <link rel="stylesheet" href="styles/globals.css" />
+    <link rel="stylesheet" href="src/styles/globals.css" />
 
     <!-- SEO -->
     <title>Les petits plats</title>
@@ -40,8 +40,9 @@
         <input
           class="search-container__input"
           type="search"
-          value="search"
+          value=""
           id="search-input"
+          oninput="getComputedStyle(this.value, recipe)"
         />
 
         <button class="search-container__btn" type="button">

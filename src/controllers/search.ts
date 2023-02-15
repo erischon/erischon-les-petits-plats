@@ -1,45 +1,4 @@
-// function createSearchPool(data: recipe[], useCase: number) {
-//   const searchPool: any = [];
-
-//   // const params = [{ type: "axe1", key: ["name", "description"] }];
-
-//   if (useCase === 1) {
-//     data.map((recipe: any) => {
-//       searchPool.push({ id: recipe.id, data: recipe.name });
-//     });
-
-//     data.map((recipe: any) => {
-//       searchPool.push({ id: recipe.id, data: recipe.description });
-//     });
-
-//     data.map((recipe: any) => {
-//       recipe.ingredients.map((item: any) => {
-//         searchPool.push({ id: recipe.id, data: item.ingredient });
-//       });
-//     });
-//   } else if (useCase === 2) {
-//     data.map((recipe: any) => {
-//       recipe.ingredients.map((item: any) => {
-//         searchPool.push({ id: recipe.id, data: item.ingredient });
-//       });
-//     });
-
-//     data.map((recipe: any) => {
-//       recipe.ustensils.map((item: any) => {
-//         searchPool.push({ id: recipe.id, data: item });
-//       });
-//     });
-
-//     data.map((recipe: any) => {
-//       searchPool.push({ id: recipe.id, data: recipe.appliance });
-//     });
-//   } else {
-//     return;
-//   }
-
-//   console.log(searchPool);
-//   return searchPool;
-// }
+import { recipes } from "../data/recipes";
 
 /**
  * Get a updated list of recipe in relation to a serach term
@@ -71,4 +30,4 @@ const getUpdatedRecipeList = (searchTerms: string, recipes: recipe[]) => {
   return updatedRecipeList;
 };
 
-export { getUpdatedRecipeList };
+export default getUpdatedRecipeList;

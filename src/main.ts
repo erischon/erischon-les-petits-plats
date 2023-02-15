@@ -1,10 +1,10 @@
 import { recipes } from "./data/recipes.js";
 
-import { getUpdatedRecipeList } from "./controllers/search";
+import getUpdatedRecipeList from "./controllers/search";
 
 import { searchContainer } from "./views/searchContainer";
 import { tagsContainer } from "./views/tagsContainer";
-import { rsesultsContainer } from "./views/resultsContainer";
+import { resultsContainer } from "./views/resultsContainer";
 
 import "./styles/globals.css";
 
@@ -27,10 +27,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 // Loading Views
 searchContainer();
 tagsContainer();
-rsesultsContainer();
+resultsContainer();
 
-const searchTerms: string = "tart";
+// const searchTerms: string = "tart";
 
-const updatedRecipeList = getUpdatedRecipeList(searchTerms, recipes);
+// const updatedRecipeList = getUpdatedRecipeList(searchTerms, recipes);
 
-console.log("======updatedRecipeList", updatedRecipeList);
+// console.log("======updatedRecipeList", updatedRecipeList);

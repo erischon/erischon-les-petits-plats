@@ -1,7 +1,7 @@
-export function rsesultsContainer(): Element {
-  const rsesultsContainerEl = document.querySelector(".results-container");
+export function resultsContainer(): Element {
+  const resultsContainerEl = document.querySelector(".results-container");
 
-  const rsesultsContainer = `
+  const resultsContainer = `
   <article class="card-box">
   <div class="card-container-top"></div>
 
@@ -158,9 +158,7 @@ export function rsesultsContainer(): Element {
 </article>
     `;
 
-  rsesultsContainerEl
-    ? (rsesultsContainerEl.innerHTML = rsesultsContainer)
-    : null;
+  resultsContainerEl ? (resultsContainerEl.innerHTML = resultsContainer) : null;
 
-  return rsesultsContainerEl!;
+  return resultsContainerEl!;
 }

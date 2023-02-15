@@ -1,3 +1,5 @@
+import getUpdatedRecipeList from "../controllers/search";
+
 export function searchContainer(): Element {
   const searchContainerEl = document.querySelector(".search-container");
 
@@ -5,7 +7,7 @@ export function searchContainer(): Element {
       <input
         class="search-container__input"
         type="search"
-        value="search"
+        value=""
         id="search-input"
       />
     
@@ -18,3 +20,5 @@ export function searchContainer(): Element {
 
   return searchContainerEl!;
 }
+
+// comment j'ajoute oninput="getUpdatedRecipeList(this.value)"
