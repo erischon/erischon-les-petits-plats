@@ -1,9 +1,12 @@
-import "./styles/globals.css";
-import { getUpdatedRecipeList } from "./search";
 import { recipes } from "./data/recipes.js";
+
+import { getUpdatedRecipeList } from "./controllers/search";
+
 import { searchContainer } from "./views/searchContainer";
 import { tagsContainer } from "./views/tagsContainer";
 import { rsesultsContainer } from "./views/resultsContainer";
+
+import "./styles/globals.css";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <header class="header-container container">
@@ -22,7 +25,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 `;
 
 // Loading Views
-
 searchContainer();
 tagsContainer();
 rsesultsContainer();
