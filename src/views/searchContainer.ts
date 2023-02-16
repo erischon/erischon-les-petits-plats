@@ -18,6 +18,10 @@ export function searchContainer(): Element {
 
   searchContainerEl ? (searchContainerEl.innerHTML = searchContainer) : null;
 
+  searchContainerEl
+    ?.querySelector(".search-container__input")
+    .addEventListener("input", getUpdatedRecipeList(a, b));
+
   return searchContainerEl!;
 }
 
