@@ -1,4 +1,4 @@
-export function tagsContainer(): Element {
+export function tagsContainer() {
   const tagsContainerEl = document.querySelector(".tags-container");
 
   const tagsContainer = `
@@ -34,5 +34,5 @@ export function tagsContainer(): Element {
 
   tagsContainerEl ? (tagsContainerEl.innerHTML = tagsContainer) : null;
 
-  return tagsContainerEl!;
+  return tagsContainerEl;
 }

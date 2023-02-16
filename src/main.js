@@ -1,14 +1,14 @@
 import { recipes } from "./data/recipes.js";
 
-import getUpdatedRecipeList from "./controllers/search";
+import getUpdatedRecipeList from "./controllers/search.js";
 
-import { searchContainer } from "./views/searchContainer";
-import { tagsContainer } from "./views/tagsContainer";
-import { resultsContainer } from "./views/resultsContainer";
+import { searchContainer } from "./views/searchContainer.js";
+import { tagsContainer } from "./views/tagsContainer.js";
+import { resultsContainer } from "./views/resultsContainer.js";
 
 import "./styles/globals.css";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+document.querySelector("#app").innerHTML = `
   <header class="header-container container">
     <img src="logo.svg" />
 

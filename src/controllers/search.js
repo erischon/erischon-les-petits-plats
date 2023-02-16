@@ -1,17 +1,21 @@
 import { recipes } from "../data/recipes";
 
+export default function display(value) {
+  console.log(value);
+}
+
 /**
- * Get a updated list of recipe in relation to a serach term
+ * Get an updated list of recipe in relation to a serach term
  * @param searchTerms
  * @param recipes
  * @returns
  */
-const getUpdatedRecipeList = (searchTerms: string, recipes: recipe[]) => {
-  let updatedRecipeList: Array<recipe> = [];
+export const getUpdatedRecipeList = (searchTerms) => {
+  let updatedRecipeList = [];
 
   const searchWords = new RegExp(searchTerms.replace(/\s/g, ""), "gi");
 
-  recipes.map((recipe: any) => {
+  recipes.map((recipe) => {
     if (searchWords.test(recipe.name)) {
       updatedRecipeList.push(recipe);
     }
@@ -20,7 +24,7 @@ const getUpdatedRecipeList = (searchTerms: string, recipes: recipe[]) => {
       updatedRecipeList.push(recipe);
     }
 
-    recipe?.ingredients?.map((item: any) => {
+    recipe?.ingredients?.map((item) => {
       if (searchWords.test(item)) {
         updatedRecipeList.push(recipe);
       }
@@ -30,4 +34,4 @@ const getUpdatedRecipeList = (searchTerms: string, recipes: recipe[]) => {
   return updatedRecipeList;
 };
 
-export default getUpdatedRecipeList;
+// export default getUpdatedRecipeList;
