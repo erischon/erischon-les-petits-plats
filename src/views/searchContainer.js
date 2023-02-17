@@ -1,5 +1,6 @@
-import getUpdatedRecipeList from "../controllers/search";
-import { recipes } from "../data/recipes";
+import { getUpdatedRecipeList } from "../controllers/search";
+
+const MIN_QUERY_LENGTH = 3;
 
 export function displaySearchContainer(recipes) {
   const searchContainerEl = document.createElement("div");
@@ -24,8 +25,9 @@ export function displaySearchContainer(recipes) {
   searchContainerEl.innerHTML = searchContainerHtml;
 
   searchContainerEl.addEventListener("input", (e) => {
-    const resp = getUpdatedRecipeList(e.data, recipes);
-    console.log(resp, e.data);
+    if (e.target.value.length >= MIN_QUERY_LENGTH) {
+      const resp = getUpdatedRecipeList(e.target.value, recipes);
+    }
   });
 
   document.querySelector("#search-container").appendChild(searchContainerEl);

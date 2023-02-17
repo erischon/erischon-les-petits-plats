@@ -1,19 +1,13 @@
-import { recipes } from "../data/recipes";
-
-export default function display(value) {
-  console.log(value);
-}
-
 /**
  * Get an updated list of recipe in relation to a serach term
  * @param searchTerms
  * @param recipes
  * @returns
  */
-export const getUpdatedRecipeList = (searchTerms) => {
+export function getUpdatedRecipeList(searchTerms, recipes) {
   let updatedRecipeList = [];
 
-  const searchWords = new RegExp(searchTerms.replace(/\s/g, ""), "gi");
+  const searchWords = new RegExp(searchTerms, "gi");
 
   recipes.map((recipe) => {
     if (searchWords.test(recipe.name)) {
@@ -30,8 +24,8 @@ export const getUpdatedRecipeList = (searchTerms) => {
       }
     });
   });
-
+  console.log(updatedRecipeList);
   return updatedRecipeList;
-};
+}
 
 // export default getUpdatedRecipeList;
