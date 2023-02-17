@@ -1,4 +1,4 @@
-export const recipes: recipe[] = [
+export const recipes = [
   {
     id: 1,
     name: "Limonade de Coco",

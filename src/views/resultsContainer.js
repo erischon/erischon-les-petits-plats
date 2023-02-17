@@ -1,4 +1,4 @@
-export function resultsContainer(): Element {
+export function resultsContainer() {
   const resultsContainerEl = document.querySelector(".results-container");
 
   const resultsContainer = `
@@ -160,5 +160,5 @@ export function resultsContainer(): Element {
 
   resultsContainerEl ? (resultsContainerEl.innerHTML = resultsContainer) : null;
 
-  return resultsContainerEl!;
+  return resultsContainerEl;
 }
