@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="src/styles/globals.css" />
 
+    <script type="module" src="/src/main.js" defer></script>
+
     <title>Les petits plats</title>
   </head>
   <body>
@@ -21,19 +23,7 @@
     </header>
 
     <main class="home-page-container">
-      <section class="search-container container">
-        <input
-          class="search-container__input"
-          type="search"
-          value=""
-          id="search-input"
-          oninput="display(this.value)"
-        />
-
-        <button class="search-container__btn" type="button">
-          <i class="fa fa-search"></i>
-        </button>
-      </section>
+      <section id="search-container"></section>
 
       <section class="tags-container container">
         <div class="tags-group">
