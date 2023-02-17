@@ -2,10 +2,12 @@ import getUpdatedRecipeList from "../controllers/search";
 import { recipes } from "../data/recipes";
 
 export function displaySearchContainer(recipes) {
-  const searchContainerEl = document.querySelector("#search-container");
+  const searchContainerEl = document.createElement("div");
 
-  const searchContainer = `
-    <div class="search-container container">
+  searchContainerEl.classList.add("search-container");
+  searchContainerEl.classList.add("container");
+
+  const searchContainerHtml = `
       <input
         class="search-container__input"
         type="search"
@@ -16,11 +18,15 @@ export function displaySearchContainer(recipes) {
       <button class="search-container__btn" type="button">
         <i class="fa fa-search"></i>
       </button>
-    </div>
+
     `;
 
-  searchContainerEl.innerHTML = searchContainer;
-  // searchContainerEl.addEventListener("input", (e) => console.log(e.data));
+  searchContainerEl.innerHTML = searchContainerHtml;
 
-  document.querySelector(".search-container").appendChild(searchContainerEl);
+  searchContainerEl.addEventListener("input", (e) => {
+    const resp = getUpdatedRecipeList(e.data, recipes);
+    console.log(resp, e.data);
+  });
+
+  document.querySelector("#search-container").appendChild(searchContainerEl);
 }
