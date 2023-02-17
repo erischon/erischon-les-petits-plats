@@ -19,7 +19,6 @@ export function displaySearchContainer(recipes) {
       <button class="search-container__btn" type="button">
         <i class="fa fa-search"></i>
       </button>
-
     `;
 
   searchContainerEl.innerHTML = searchContainerHtml;
