@@ -25,9 +25,7 @@ export function getUpdatedRecipeList(searchTerms, recipes) {
     });
   });
 
-  console.log(updatedRecipeList);
+  // console.log(updatedRecipeList);
 
   return updatedRecipeList;
 }
-
-// export default getUpdatedRecipeList;
