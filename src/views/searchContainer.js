@@ -1,7 +1,10 @@
 import getUpdatedRecipeList from "../controllers/search";
+import { recipes } from "../data/recipes";
 
 export function searchContainer() {
+  recipes = import(recipes);
   const searchContainerEl = document.querySelector(".search-container");
+  console.log(recipes);
 
   const searchContainer = `
       <input
@@ -18,7 +21,14 @@ export function searchContainer() {
 
   searchContainerEl ? (searchContainerEl.innerHTML = searchContainer) : null;
 
-  return searchContainerEl;
+  const test = searchContainerEl?.querySelector(".search-container__input");
+  test.addEventListener("input", getUpdatedRecipeList(this, recipes));
+
+  // test.querySelector(".search-container__input").oninput = function () {
+  //   getUpdatedRecipeList("a", "b");
+  // };
+
+  return recipes;
 }
 
 // comment j'ajoute oninput="getUpdatedRecipeList(this.value)"

@@ -25,7 +25,7 @@ document.querySelector("#app").innerHTML = `
 `;
 
 // Loading Views
-searchContainer();
+searchContainer(recipes);
 tagsContainer();
 resultsContainer();
 
