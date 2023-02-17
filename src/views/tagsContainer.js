@@ -32,7 +32,5 @@ export function tagsContainer() {
   </div>
     `;
 
-  tagsContainerEl ? (tagsContainerEl.innerHTML = tagsContainer) : null;
-
   return tagsContainerEl;
 }
