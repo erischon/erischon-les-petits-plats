@@ -10,22 +10,16 @@ export function getUpdatedRecipeList(searchTerms, recipes) {
   const searchWords = new RegExp(searchTerms, "gi");
 
   recipes.map((recipe) => {
-    if (searchWords.test(recipe.name)) {
+    if (
+      searchWords.test(recipe.name) ||
+      searchWords.test(recipe.description) ||
+      searchWords.test(recipe.ingredients.map((item) => item.ingredient))
+    ) {
       updatedRecipeList.push(recipe);
     }
-
-    if (searchWords.test(recipe.description)) {
-      updatedRecipeList.push(recipe);
-    }
-
-    recipe?.ingredients?.map((item) => {
-      if (searchWords.test(item)) {
-        updatedRecipeList.push(recipe);
-      }
-    });
   });
 
-  console.log(updatedRecipeList);
+  // console.log(updatedRecipeList);
 
   return updatedRecipeList;
 }

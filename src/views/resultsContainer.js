@@ -1,5 +1,3 @@
-import { recipes } from "../data/recipes";
-
 export class DisplayResultsContainer {
   constructor(results) {
     this.resultsContainerEl = this.createElement();
@@ -74,5 +72,3 @@ export class DisplayResultsContainer {
     return articleEl;
   }
 }
-
-const res = new DisplayResultsContainer(recipes);

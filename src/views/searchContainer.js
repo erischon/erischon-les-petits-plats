@@ -23,11 +23,13 @@ export function displaySearchContainer(recipes) {
 
   searchContainerEl.innerHTML = searchContainerHtml;
 
-  searchContainerEl.addEventListener("input", (e) => {
+  const newList = searchContainerEl.addEventListener("input", (e) => {
     if (e.target.value.length >= MIN_QUERY_LENGTH) {
       const resp = getUpdatedRecipeList(e.target.value, recipes);
+      return resp;
     }
   });
 
   document.querySelector("#search-container").appendChild(searchContainerEl);
+  return newList;
 }
