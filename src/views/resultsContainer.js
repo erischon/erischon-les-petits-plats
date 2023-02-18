@@ -1,52 +1,76 @@
 import { recipes } from "../data/recipes";
 
-export function displayResultsContainer(results) {
-  const articleEl = document.createElement("article");
+export class DisplayResultsContainer {
+  constructor(results) {
+    this.resultsContainerEl = this.createElement();
+    this.displayCards(results);
+    document
+      .querySelector("#results-container")
+      .appendChild(this.resultsContainerEl);
+  }
 
-  console.log("======results", results[25]);
+  createElement() {
+    const resultsContainerEl = document.createElement("div");
 
-  articleEl.classList.add("card-box");
+    resultsContainerEl.classList.add("results-container");
+    resultsContainerEl.classList.add("container");
 
-  const resultsContainer = `
-  <div class="card-container-top"></div>
+    return resultsContainerEl;
+  }
 
-  <div class="card-container-bottom">
-    <div class="card-container-bottom__top">
-      <h2 class="card-title">${results[25].name}</h2>
+  // Displaying Cards
+  displayCards(results) {
+    results.forEach((result) => {
+      const articleEl = document.createElement("article");
+      articleEl.classList.add("card-box");
 
-      <div class="card-period">
-        <span><i class="fa-regular fa-clock"></i></span>
-        <div>${results[25].time}</div>
+      articleEl.innerHTML = `
+      <div class="card-container-top"></div>
+    
+      <div class="card-container-bottom">
+        <div class="card-container-bottom__top">
+          <h2 class="card-title">${result.name}</h2>
+    
+          <div class="card-period">
+            <span><i class="fa-regular fa-clock"></i></span>
+            <div>${result.time}</div>
+          </div>
+        </div>
+    
+        <div class="card-container-bottom__bottom">
+          <ul id="ingredients-list">
+          </ul>
+    
+          <div>
+          ${result.description}
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="card-container-bottom__bottom">
-      <ul id="ingredients-list">
-      </ul>
-
-      <div>
-      ${results[25].description}
-      </div>
-    </div>
-  </div>
     `;
 
-  articleEl.innerHTML = resultsContainer;
+      this.displayIngredients(articleEl, result.ingredients);
+      this.resultsContainerEl?.appendChild(articleEl);
+    });
+  }
 
-  results[25].ingredients.forEach((ingredient) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${ingredient.ingredient}: 
+  // Displaying ingredients
+  displayIngredients(articleEl, ingredients) {
+    ingredients.forEach((ingredient) => {
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+      ${ingredient.ingredient}${ingredient.quantity ? ":" : ""} 
       <span>
-        ${ingredient.quantity ? ingredient.quantity : ""}
-        ${ingredient.unit ? ingredient.unit : ""}
+      ${ingredient.quantity ? ingredient.quantity : ""}
+      ${ingredient.unit ? ingredient.unit : ""}
       </span>
-    `;
+      `;
 
-    articleEl.querySelector("#ingredients-list").appendChild(li);
-  });
+      articleEl.querySelector("#ingredients-list").appendChild(li);
+    });
 
-  document.querySelector("#results-container").appendChild(articleEl);
+    return articleEl;
+  }
 }
 
-displayResultsContainer(recipes);
+const res = new DisplayResultsContainer(recipes);

@@ -1,5 +1,5 @@
 import { recipes } from "./data/recipes.js";
-import { displayResultsContainer } from "./views/resultsContainer.js";
+import { DisplayResultsContainer } from "./views/resultsContainer.js";
 import { displaySearchContainer } from "./views/searchContainer.js";
 
 const global = {
