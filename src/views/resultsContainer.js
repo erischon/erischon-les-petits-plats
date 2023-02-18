@@ -9,6 +9,7 @@ export class DisplayResultsContainer {
       .appendChild(this.resultsContainerEl);
   }
 
+  // Create Result's Container
   createElement() {
     const resultsContainerEl = document.createElement("div");
 
@@ -18,37 +19,38 @@ export class DisplayResultsContainer {
     return resultsContainerEl;
   }
 
-  // Displaying Cards
+  // Create Cards and Display them inside the Result's Container
   displayCards(results) {
     results.forEach((result) => {
       const articleEl = document.createElement("article");
       articleEl.classList.add("card-box");
 
       articleEl.innerHTML = `
-      <div class="card-container-top"></div>
+        <div class="card-container-top"></div>
     
-      <div class="card-container-bottom">
-        <div class="card-container-bottom__top">
-          <h2 class="card-title">${result.name}</h2>
-    
-          <div class="card-period">
-            <span><i class="fa-regular fa-clock"></i></span>
-            <div>${result.time}</div>
+        <div class="card-container-bottom">
+          <div class="card-container-bottom__top">
+            <h2 class="card-title">${result.name}</h2>
+      
+            <div class="card-period">
+              <span><i class="fa-regular fa-clock"></i></span>
+              <div>${result.time}</div>
+            </div>
+          </div>
+      
+          <div class="card-container-bottom__bottom">
+            <ul id="ingredients-list">
+            </ul>
+      
+            <div>
+            ${result.description}
+            </div>
           </div>
         </div>
-    
-        <div class="card-container-bottom__bottom">
-          <ul id="ingredients-list">
-          </ul>
-    
-          <div>
-          ${result.description}
-          </div>
-        </div>
-      </div>
-    `;
+      `;
 
       this.displayIngredients(articleEl, result.ingredients);
+
       this.resultsContainerEl?.appendChild(articleEl);
     });
   }
@@ -59,11 +61,11 @@ export class DisplayResultsContainer {
       const li = document.createElement("li");
 
       li.innerHTML = `
-      ${ingredient.ingredient}${ingredient.quantity ? ":" : ""} 
-      <span>
-      ${ingredient.quantity ? ingredient.quantity : ""}
-      ${ingredient.unit ? ingredient.unit : ""}
-      </span>
+        ${ingredient.ingredient}${ingredient.quantity ? ":" : ""} 
+        <span>
+          ${ingredient.quantity ? ingredient.quantity : ""}
+          ${ingredient.unit ? ingredient.unit : ""}
+        </span>
       `;
 
       articleEl.querySelector("#ingredients-list").appendChild(li);
