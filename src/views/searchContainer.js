@@ -1,5 +1,5 @@
 import { getUpdatedRecipeList } from "../controllers/globalSearch";
-import { recipes } from "../data/recipes";
+import { getRecipesList } from "../controllers/utils";
 
 const MIN_QUERY_LENGTH = 3;
 
@@ -10,7 +10,10 @@ export function globalEventListener() {
   const globalInput = document.querySelector(".search-container__input");
 
   globalInput.addEventListener("input", (e) => {
-    localStorage.setItem("actualRecipeList", JSON.stringify(globalSearch(e)));
+    localStorage.setItem(
+      "actualizedRecipesList",
+      JSON.stringify(globalSearch(e))
+    );
   });
 }
 
@@ -19,7 +22,10 @@ export function globalEventListener() {
  */
 export function globalSearch(e) {
   if (e.target.value.length >= MIN_QUERY_LENGTH) {
-    const resp = getUpdatedRecipeList(e.target.value, recipes);
+    const resp = getUpdatedRecipeList(
+      e.target.value,
+      getRecipesList("recipesList")
+    );
 
     return resp;
   }

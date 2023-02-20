@@ -1,20 +1,9 @@
 export class DisplayResultsContainer {
   constructor(results) {
-    this.resultsContainerEl = this.createElement();
-    this.displayCards(results);
-    document
-      .querySelector("#results-container")
-      .appendChild(this.resultsContainerEl);
-  }
-
-  // Create Result's Container
-  createElement() {
-    const resultsContainerEl = document.createElement("div");
-
-    resultsContainerEl.classList.add("results-container");
-    resultsContainerEl.classList.add("container");
-
-    return resultsContainerEl;
+    this.resultsContainerEl = document.querySelector(".results-container");
+    if (results.length > 0) {
+      this.displayCards(results);
+    }
   }
 
   // Create Cards and Display them inside the Result's Container
