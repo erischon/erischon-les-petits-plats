@@ -1,3 +1,6 @@
+import { DisplayResultsContainer } from "../views/resultsContainer";
+import { getRecipesList } from "./utils";
+
 /**
  * Get an updated list of recipe in relation to a search term
  * @param searchTerms
@@ -6,6 +9,7 @@
  */
 export function getUpdatedRecipeList(searchTerms, recipes) {
   let updatedRecipeList = [];
+  let resp = new DisplayResultsContainer();
 
   const searchWords = new RegExp(searchTerms, "gi");
 
@@ -19,7 +23,10 @@ export function getUpdatedRecipeList(searchTerms, recipes) {
     }
   });
 
-  // console.log(updatedRecipeList);
+  resp.getCards(updatedRecipeList);
+  console.log(resp);
+
+  console.log("======globalSearchResult", updatedRecipeList);
 
   return updatedRecipeList;
 }

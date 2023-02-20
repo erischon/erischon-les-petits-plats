@@ -1,9 +1,21 @@
 export class DisplayResultsContainer {
-  constructor(results) {
+  constructor() {
     this.resultsContainerEl = document.querySelector(".results-container");
+  }
+
+  getCards(results) {
     if (results.length > 0) {
+      this.erase();
       this.displayCards(results);
     }
+  }
+
+  erase() {
+    const articles = document.querySelectorAll(".card-box");
+    console.log(articles);
+    articles?.forEach((article) =>
+      this.resultsContainerEl?.removeChild(article)
+    );
   }
 
   // Create Cards and Display them inside the Result's Container

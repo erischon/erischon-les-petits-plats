@@ -6,22 +6,16 @@ import { getRecipesList } from "./controllers/utils";
 
 const global = {
   currentPage: window.location.pathname,
+  recipesList: setLocalStorage(recipes),
 };
 
-const recipesList = setLocalStorage(recipes);
-
-function observer() {
-  if (getRecipesList(recipesList) != getRecipesList("actualizedRecipesList")) {
-    const results = new DisplayResultsContainer(
-      getRecipesList("actualizedRecipesList")
-    );
-  }
-}
+// const results = new DisplayResultsContainer(getRecipesList("recipesList"));
 
 // Init App
 export function init() {
   globalEventListener();
+  // display tags
+  // display results
 }
 
-observer();
 document.addEventListener("DOMContentLoaded", init);
