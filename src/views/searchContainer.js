@@ -13,18 +13,12 @@ export function globalEventListener() {
   const globalInput = document.querySelector(".search-container__input");
 
   globalInput.addEventListener("input", (e) => {
+    if (e.target.value.length <= 2) {
+      const resultContainer = new DisplayResultsContainer();
+      resultContainer.eraseCards();
+    }
+
     globalSearch(e);
-    // localStorage.setItem(
-    //   "actualizedRecipesList",
-    //   JSON.stringify(globalSearch(e))
-    // );
-
-    // const result = getRecipesList("actualizedRecipesList");
-
-    // if (result.length > 0) {
-    //   console.log(result);
-    //   new DisplayResultsContainer(getRecipesList("actualizedRecipesList"));
-    // }
   });
 }
 

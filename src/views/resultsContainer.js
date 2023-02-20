@@ -5,12 +5,12 @@ export class DisplayResultsContainer {
 
   getCards(results) {
     if (results.length > 0) {
-      this.erase();
+      this.eraseCards();
       this.displayCards(results);
     }
   }
 
-  erase() {
+  eraseCards() {
     const articles = document.querySelectorAll(".card-box");
     console.log(articles);
     articles?.forEach((article) =>
