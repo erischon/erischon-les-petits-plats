@@ -1,4 +1,4 @@
-import homePage from "./views/homePage.js";
+import { globalEventListener } from "./views/searchContainer";
 
 const global = {
   currentPage: window.location.pathname,
@@ -6,16 +6,7 @@ const global = {
 
 // Init App
 export function init() {
-  switch (global.currentPage) {
-    case "/":
-    case "/index.html":
-      homePage();
-      break;
-  }
+  globalEventListener();
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
-export function displayTarget() {
-  console.log("toto");
-}

@@ -1,35 +1,26 @@
-import { getUpdatedRecipeList } from "../controllers/search";
+import { getUpdatedRecipeList } from "../controllers/globalSearch";
+import { recipes } from "../data/recipes";
 
 const MIN_QUERY_LENGTH = 3;
 
-export function displaySearchContainer(recipes) {
-  const searchContainerEl = document.createElement("div");
+/**
+ * Add an Event Listener to Search Box
+ */
+export function globalEventListener() {
+  const globalInput = document.querySelector(".search-container__input");
 
-  searchContainerEl.classList.add("search-container");
-  searchContainerEl.classList.add("container");
-
-  const searchContainerHtml = `
-      <input
-        class="search-container__input"
-        type="search"
-        value=""
-        id="search-input"
-      />
-    
-      <button class="search-container__btn" type="button">
-        <i class="fa fa-search"></i>
-      </button>
-    `;
-
-  searchContainerEl.innerHTML = searchContainerHtml;
-
-  const newList = searchContainerEl.addEventListener("input", (e) => {
-    if (e.target.value.length >= MIN_QUERY_LENGTH) {
-      const resp = getUpdatedRecipeList(e.target.value, recipes);
-      return resp;
-    }
+  globalInput.addEventListener("input", (e) => {
+    localStorage.setItem("actualRecipeList", JSON.stringify(globalSearch(e)));
   });
+}
 
-  document.querySelector("#search-container").appendChild(searchContainerEl);
-  return newList;
+/**
+ * Do a global Search
+ */
+export function globalSearch(e) {
+  if (e.target.value.length >= MIN_QUERY_LENGTH) {
+    const resp = getUpdatedRecipeList(e.target.value, recipes);
+
+    return resp;
+  }
 }

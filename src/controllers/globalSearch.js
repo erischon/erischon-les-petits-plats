@@ -1,5 +1,5 @@
 /**
- * Get an updated list of recipe in relation to a serach term
+ * Get an updated list of recipe in relation to a search term
  * @param searchTerms
  * @param recipes
  * @returns
