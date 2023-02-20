@@ -9,13 +9,19 @@ const global = {
 };
 
 const recipesList = setLocalStorage(recipes);
-const results = new DisplayResultsContainer(
-  getRecipesList("actualizedRecipesList")
-);
+
+function observer() {
+  if (getRecipesList(recipesList) != getRecipesList("actualizedRecipesList")) {
+    const results = new DisplayResultsContainer(
+      getRecipesList("actualizedRecipesList")
+    );
+  }
+}
 
 // Init App
 export function init() {
   globalEventListener();
 }
 
+observer();
 document.addEventListener("DOMContentLoaded", init);
