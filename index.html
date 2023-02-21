@@ -11,32 +11,12 @@
 
     <link rel="stylesheet" href="src/styles/globals.css" />
 
-    <script type="module" src="/src/main.js" defer></script>
-    <!-- <script type="module" src="./src/views/searchContainer.js"></script> -->
+    <script type="module" src="scripts.js" defer></script>
 
     <title>Les petits plats</title>
   </head>
   <body>
-    <header class="header-container container">
-      <img src="./logo.svg" />
-
-      <h2 class="text-danger">Les petits plats</h2>
-    </header>
-
     <main class="home-page-container">
-      <section id="search-container" class="search-container container">
-        <input
-          class="search-container__input"
-          type="search"
-          value=""
-          id="search-input"
-        />
-
-        <button class="search-container__btn" type="button">
-          <i class="fa fa-search"></i>
-        </button>
-      </section>
-
       <section class="tags-container container">
         <div class="tags-group">
           <div class="tag bg-blue">
@@ -51,24 +31,22 @@
         </div>
 
         <div class="dropdown-group">
-          <div class="dropdown bg-blue">
+          <div id="ingredients" class="dropdown bg-blue">
             <span>Ingredients</span>
             <i class="fa fa-chevron-down"></i>
           </div>
 
-          <div class="dropdown bg-green">
+          <div id="appareils" class="dropdown bg-green">
             <span>Appareils</span>
             <i class="fa fa-chevron-down"></i>
           </div>
 
-          <div class="dropdown bg-red">
+          <div id="ustensiles" class="dropdown bg-red">
             <span>Ustensiles</span>
             <i class="fa fa-chevron-down"></i>
           </div>
         </div>
       </section>
-
-      <section class="results-container container"></section>
     </main>
   </body>
 </html>
