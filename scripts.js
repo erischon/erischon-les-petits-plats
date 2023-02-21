@@ -7,7 +7,12 @@ export function createDropdownEvent() {
 }
 
 export function handleDropdownClick(id) {
-  console.log(id);
+  const dropdownEl = document.querySelector(`#${id}`);
+  const isActive = dropdownEl.className.split(" ").indexOf("active") > -1;
+
+  !isActive
+    ? dropdownEl.classList.add("active")
+    : dropdownEl.classList.remove("active");
 }
 
 createDropdownEvent();
