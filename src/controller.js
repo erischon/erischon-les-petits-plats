@@ -16,6 +16,7 @@ const global = {
 
 // Init App
 export function init() {
+  controlResult();
   globalEventListener();
   // display tags
   // display results
@@ -29,8 +30,6 @@ async function controlResult() {
 
     resultsView.render(state.recipes);
   } catch (err) {
-    console.error(err);
+    console.error(`🛑⚡\nError controlResult()\n${err}\n ⚡🛑`);
   }
 }
-
-controlResult();
