@@ -2,17 +2,28 @@ export function createDropdownEvent() {
   const dropdown = document.querySelectorAll(".dropdown");
 
   dropdown.forEach((item) => {
-    item.addEventListener("click", (e) => handleDropdownClick(item.id));
+    item.addEventListener("click", (e) => new TagsBox(item.id));
   });
 }
 
-export function handleDropdownClick(id) {
-  const dropdownEl = document.querySelector(`#${id}`);
-  const isActive = dropdownEl.className.split(" ").indexOf("active") > -1;
+class TagsBox {
+  constructor(id) {
+    this.dropdownEl = document.querySelector(`#${id}`);
+    this.toggleActive();
+    console.log(this.isActive());
+  }
 
-  !isActive
-    ? dropdownEl.classList.add("active")
-    : dropdownEl.classList.remove("active");
+  view() {}
+
+  isActive() {
+    return this.dropdownEl.className.split(" ").indexOf("active") > -1;
+  }
+
+  toggleActive() {
+    !this.isActive()
+      ? this.dropdownEl.classList.add("active")
+      : this.dropdownEl.classList.remove("active");
+  }
 }
 
 createDropdownEvent();
