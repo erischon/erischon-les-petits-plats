@@ -1,10 +1,11 @@
 import { setLocalStorage } from "./controllers/utils";
-import { globalEventListener } from "./views/searchContainer";
+
 import { recipes } from "./data/recipes";
 import { DisplayResultsContainer } from "./views/resultsContainer";
 import { getRecipesList } from "./controllers/utils";
+import { getUpdatedRecipeList } from "./controllers/globalSearch";
 
-import { state } from "./model";
+import { state, globalSearch } from "./model";
 import resultsView from "./views/resultsView";
 
 const global = {
@@ -22,8 +23,6 @@ export function init() {
   // display results
 }
 
-document.addEventListener("DOMContentLoaded", init);
-
 async function controlResult() {
   try {
     if (Object.keys(state.recipes).length === 0) return;
@@ -33,3 +32,13 @@ async function controlResult() {
     console.error(`🛑⚡\nError controlResult()\n${err}\n ⚡🛑`);
   }
 }
+
+function globalEventListener() {
+  const globalInput = document.querySelector(".search-container__input");
+
+  globalInput.addEventListener("input", (e) => {
+    globalSearch(e);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", init);

@@ -1,8 +1,11 @@
 import { recipes } from "./data/recipes";
+import { getUpdatedRecipeList } from "./controllers/globalSearch";
 
 export const state = {
-  recipes: {},
+  recipes: recipes,
 };
+
+console.log("======state.recipes", state.recipes);
 
 export async function loadRecipes() {
   try {
@@ -30,4 +33,13 @@ export function search(searchTerms, recipes) {
   console.log("======globalSearchResult", updatedRecipeList);
 
   return updatedRecipeList;
+}
+
+export function globalSearch(e) {
+  if (e.target.value.length >= 3) {
+    return (state.recipes = getUpdatedRecipeList(
+      e.target.value,
+      state.recipes
+    ));
+  }
 }

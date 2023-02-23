@@ -24,7 +24,6 @@ export function getUpdatedRecipeList(searchTerms, recipes) {
   });
 
   resp.getCards(updatedRecipeList);
-  console.log(resp);
 
   console.log("======globalSearchResult", updatedRecipeList);
 

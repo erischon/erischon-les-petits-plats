@@ -12,7 +12,7 @@ export class DisplayResultsContainer {
 
   eraseCards() {
     const articles = document.querySelectorAll(".card-box");
-    console.log(articles);
+
     articles?.forEach((article) =>
       this.resultsContainerEl?.removeChild(article)
     );
