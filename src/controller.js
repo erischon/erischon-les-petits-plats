@@ -23,4 +23,14 @@ export function init() {
 
 document.addEventListener("DOMContentLoaded", init);
 
-resultsView.render(recipes);
+async function controlResult() {
+  try {
+    if (Object.keys(state.recipes).length === 0) return;
+
+    resultsView.render(state.recipes);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+controlResult();

@@ -6,6 +6,7 @@ class ResultsView {
     this.__data = data;
 
     const markup = this.__generateMarkup();
+    this.__clear();
 
     this.__parentEl.insertAdjacentHTML("afterbegin", markup);
   }
@@ -59,17 +60,8 @@ class ResultsView {
     `;
   }
 
-  __generateIngredient(ingredient) {
-    console.log("======ingredient", ingredient);
-    return `
-    <li>
-      ${ingredient.ingredient}${ingredient.quantity ? ":" : ""} 
-      <span>
-        ${ingredient.quantity ? ingredient.quantity : ""}
-        ${ingredient.unit ? ingredient.unit : ""}
-      </span>
-    </li>
-    `;
+  __clear() {
+    this.__parentEl.innerHTML = "";
   }
 }
 

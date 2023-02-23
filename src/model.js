@@ -1,7 +1,7 @@
 import { recipes } from "./data/recipes";
 
 export const state = {
-  recipes: recipes,
+  recipes: {},
 };
 
 export async function loadRecipes() {

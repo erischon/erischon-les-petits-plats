@@ -2,6 +2,7 @@ import { getUpdatedRecipeList } from "../controllers/globalSearch";
 import { getRecipesList } from "../controllers/utils";
 import { DisplayResultsContainer } from "./resultsContainer";
 import { recipes } from "../data/recipes";
+import { state } from "../model";
 
 const MIN_QUERY_LENGTH = 3;
 localStorage.setItem("actualizedRecipesList", []);
@@ -27,7 +28,7 @@ export function globalEventListener() {
  */
 export function globalSearch(e) {
   if (e.target.value.length >= MIN_QUERY_LENGTH) {
-    const resp = getUpdatedRecipeList(e.target.value, recipes);
+    const resp = getUpdatedRecipeList(e.target.value, state.recipes);
 
     return resp;
   }
