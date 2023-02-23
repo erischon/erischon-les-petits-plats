@@ -9,9 +9,9 @@
       crossorigin="anonymous"
     ></script>
 
-    <link rel="stylesheet" href="src/styles/globals.css" />
+    <link rel="stylesheet" href="src/styles/main.scss" />
 
-    <script type="module" src="/src/main.js" defer></script>
+    <script type="module" src="/src/controller.js" defer></script>
     <!-- <script type="module" src="./src/views/searchContainer.js"></script> -->
 
     <title>Les petits plats</title>
@@ -68,7 +68,12 @@
         </div>
       </section>
 
-      <section class="results-container container"></section>
+      <section class="results container">
+        <div class="message">
+          <i class="fa-regular fa-face-smile-wink"></i>
+          <p>Launch your search either by a word or by a tag</p>
+        </div>
+      </section>
     </main>
   </body>
 </html>

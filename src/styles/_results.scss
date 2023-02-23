@@ -1,0 +1,24 @@
+.results {
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    i {
+      font-size: 2rem;
+      color: brown;
+    }
+
+    p {
+      font-size: 1.5rem;
+    }
+  }
+}
