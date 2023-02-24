@@ -22,10 +22,7 @@
 
 .dropdown-group {
   display: flex;
-  justify-content: space-between;
   gap: 20px;
-
-  background-color: #68d9a4;
 }
 
 .dropdown {
@@ -33,7 +30,7 @@
   justify-content: space-between;
   align-items: center;
 
-  min-width: 170px;
+  width: 170px;
   padding: 24px 15px;
 
   border-radius: 5px;
@@ -43,7 +40,8 @@
   color: white;
 }
 
-.dropdown i {
+.dropdown__btn {
+  color: white;
   margin-left: 1rem;
   cursor: pointer;
 }

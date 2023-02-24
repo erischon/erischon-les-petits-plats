@@ -1,5 +1,6 @@
-class TagsBoxView {
-  _parentEl = document.querySelector("#ingredients");
+export class TagsBoxView {
+  _parentEl = document.querySelector("#appareils");
+  _buttonEl = this._parentEl.querySelector(".dropdown__btn");
 
   displayBox(type) {
     this._clear();
@@ -11,7 +12,7 @@ class TagsBoxView {
   _generateMarkup() {
     return `
     <div class="results__container">
-      <p>toto</p>
+      <p>Le nouveau container</p>
     </div>
     `;
   }
@@ -21,12 +22,10 @@ class TagsBoxView {
   }
 
   addHandlerDisplay(handler) {
-    this._parentEl.addEventListener("click", function (e) {
+    this._buttonEl.addEventListener("click", function (e) {
       e.preventDefault();
 
       handler(e);
     });
   }
 }
-
-export default new TagsBoxView();
