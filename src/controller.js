@@ -6,38 +6,20 @@ function init() {
   searchView.addHandlerSearch(controlSearchResults);
 }
 
-async function controlResults() {
-  try {
-    if (Object.keys(model.state.search.results).length === 0) return;
-
-    resultsView.render(model.state.search.results);
-  } catch (err) {
-    console.error(`🛑⚡\nError controlResults()\n${err}\n ⚡🛑`);
-  }
-}
-
 async function controlSearchResults() {
   try {
+    // Get
     const query = searchView.getQuery();
     if (!query || query.length < 3) return;
 
+    // Load
     await model.loadSearchResults(query);
 
-    console.log(model.state.search.results);
+    // Render
+    resultsView.render(model.state.search.results);
   } catch (err) {
-    console.error(err);
+    console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
   }
 }
-controlSearchResults();
-
-// function globalEventListener() {
-//   const globalInput = document.querySelector(".search-container__input");
-
-//   globalInput.addEventListener("input", (e) => {
-//     globalSearch(e);
-//   });
-// }
-
-// document.addEventListener("DOMContentLoaded", init);
 
 init();

@@ -1,25 +1,30 @@
 class ResultsView {
-  __parentEl = document.querySelector(".results");
-  __data;
+  _parentEl = document.querySelector(".results");
+  _errorMessage = `No recipes found for your query! Please try again`;
+
+  _data;
 
   render(data) {
-    this.__data = data;
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
 
-    const markup = this.__generateMarkup();
-    this.__clear();
+    this._data = data;
 
-    this.__parentEl.insertAdjacentHTML("afterbegin", markup);
+    const markup = this._generateMarkup();
+    this._clear();
+
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
-  __generateMarkup() {
+  _generateMarkup() {
     return `
     <div class="results__container">
-      ${this.__data.map(this.__generateCard).join("")}
+      ${this._data.map(this._generateCard).join("")}
     </div>
     `;
   }
 
-  __generateCard(result) {
+  _generateCard(result) {
     return `
     <article class="card-box">
       <div class="card-container-top"></div>
@@ -60,8 +65,22 @@ class ResultsView {
     `;
   }
 
-  __clear() {
-    this.__parentEl.innerHTML = "";
+  _clear() {
+    this._parentEl.innerHTML = "";
+  }
+
+  renderError(message = this._errorMessage) {
+    const markup = `
+    <div class="message">
+      <div>
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <p>${message}</p>
+    </div>
+    `;
+
+    this._clear();
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 }
 
