@@ -1,22 +1,27 @@
 import * as model from "./model";
 import resultsView from "./views/resultsView";
+import searchView from "./views/searchView";
 
-function init() {}
+function init() {
+  searchView.addHandlerSearch(controlSearchResults);
+}
 
 async function controlResults() {
   try {
-    if (Object.keys(model.state.recipes).length === 0) return;
+    if (Object.keys(model.state.search.results).length === 0) return;
 
-    resultsView.render(model.state.recipes);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlResults()\n${err}\n ⚡🛑`);
   }
 }
-controlResults();
 
 async function controlSearchResults() {
   try {
-    await model.loadSearchResults("tarte");
+    const query = searchView.getQuery();
+    if (!query) return;
+
+    await model.loadSearchResults(query);
 
     console.log(model.state.search.results);
   } catch (err) {
