@@ -24,9 +24,9 @@ async function controlSearchResults() {
   }
 }
 
-async function controlTagsBox() {
+async function controlTagsBox(e) {
   try {
-    tagsBoxView.displayBox();
+    tagsBoxView.displayBox(e.srcElement.id);
   } catch (err) {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }
