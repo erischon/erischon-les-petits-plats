@@ -1,45 +1,49 @@
-import { recipes } from "./data/recipes";
 import { getUpdatedRecipeList } from "./controllers/globalSearch";
+import { recipes } from "./data/recipes";
+
+import { getJSON } from "./helpers";
 
 export const state = {
   recipes: recipes,
+  search: {
+    query: "",
+    results: [],
+  },
 };
 
 console.log("======state.recipes", state.recipes);
 
-export async function loadRecipes() {
-  try {
-  } catch (err) {
-    console.error(err);
-  }
+function createQuery(searchTerms) {
+  const query = new RegExp(searchTerms, "gi");
+
+  return query;
 }
 
-export function search(searchTerms, recipes) {
+function searchRecipe(query, recipes) {
   let updatedRecipeList = [];
-  let resp = new DisplayResultsContainer();
-
-  const searchWords = new RegExp(searchTerms, "gi");
 
   recipes.map((recipe) => {
     if (
-      searchWords.test(recipe.name) ||
-      searchWords.test(recipe.description) ||
-      searchWords.test(recipe.ingredients.map((item) => item.ingredient))
+      query.test(recipe.name) ||
+      query.test(recipe.description) ||
+      query.test(recipe.ingredients.map((item) => item.ingredient))
     ) {
       updatedRecipeList.push(recipe);
     }
   });
 
-  console.log("======globalSearchResult", updatedRecipeList);
-
   return updatedRecipeList;
 }
 
-export function globalSearch(e) {
-  if (e.target.value.length >= 3) {
-    return (state.recipes = getUpdatedRecipeList(
-      e.target.value,
-      state.recipes
-    ));
+export async function loadSearchResults(searchTerms) {
+  try {
+    state.search.query = createQuery(searchTerms);
+    const data = await getJSON();
+
+    const results = searchRecipe(state.search.query, data);
+
+    state.search.results = results;
+  } catch (err) {
+    console.error(err);
   }
 }
