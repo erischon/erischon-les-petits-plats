@@ -1,9 +1,11 @@
 import * as model from "./model";
 import resultsView from "./views/resultsView";
 import searchView from "./views/searchView";
+import tagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
+  tagsBoxView.addHandlerDisplay(controlTagsBox);
 }
 
 async function controlSearchResults() {
@@ -19,6 +21,14 @@ async function controlSearchResults() {
     resultsView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
+  }
+}
+
+async function controlTagsBox() {
+  try {
+    tagsBoxView.displayBox();
+  } catch (err) {
+    console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }
 }
 
