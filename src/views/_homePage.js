@@ -1,6 +1,6 @@
 import { recipes } from "../data/recipes";
 import { DisplayResultsContainer } from "./_resultsContainer";
-import { displaySearchContainer } from "./searchContainer.js";
+import { displaySearchContainer } from "./_searchContainer.js";
 
 export default function homePage() {
   const updatedRecipes = displaySearchContainer(recipes);
