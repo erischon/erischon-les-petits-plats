@@ -1,17 +1,12 @@
-import { getUpdatedRecipeList } from "./controllers/globalSearch";
-import { recipes } from "./data/recipes";
-
 import { getJSON } from "./helpers";
 
 export const state = {
-  recipes: recipes,
+  recipes: {},
   search: {
     query: "",
     results: [],
   },
 };
-
-console.log("======state.recipes", state.recipes);
 
 function createQuery(searchTerms) {
   const query = new RegExp(searchTerms, "gi");

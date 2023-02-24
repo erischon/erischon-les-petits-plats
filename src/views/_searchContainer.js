@@ -1,6 +1,6 @@
-import { getUpdatedRecipeList } from "../controllers/globalSearch";
-import { getRecipesList } from "../controllers/utils";
-import { DisplayResultsContainer } from "./resultsContainer";
+import { getUpdatedRecipeList } from "../controllers/_globalSearch";
+import { getRecipesList } from "../controllers/_utils";
+import { DisplayResultsContainer } from "./_resultsContainer";
 import { recipes } from "../data/recipes";
 import { state } from "../model";
 

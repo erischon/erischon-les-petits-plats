@@ -1,5 +1,5 @@
-import { DisplayResultsContainer } from "../views/resultsContainer";
-import { getRecipesList } from "./utils";
+import { DisplayResultsContainer } from "../views/_resultsContainer";
+import { getRecipesList } from "./_utils";
 
 /**
  * Get an updated list of recipe in relation to a search term
