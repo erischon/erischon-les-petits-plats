@@ -8,6 +8,7 @@ class TagsBoxView {
   addHandlerDisplay(handler) {
     this._parentEl.addEventListener("click", function (e) {
       e.preventDefault();
+      console.log(e);
       handler();
     });
   }
