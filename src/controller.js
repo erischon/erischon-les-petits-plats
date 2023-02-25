@@ -6,7 +6,7 @@ import TagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  TagsBoxView.addHandlerDisplay(controlTagsBox);
+  TagsBoxView.addHandlerOpen(controlTagsBox);
 }
 
 async function controlSearchResults() {
@@ -27,7 +27,7 @@ async function controlSearchResults() {
 
 async function controlTagsBox(e) {
   try {
-    TagsBoxView.displayBox(e.srcElement.id);
+    TagsBoxView.renderTagsBox(e.srcElement.id);
   } catch (err) {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }

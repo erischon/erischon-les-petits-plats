@@ -1,13 +1,14 @@
 export class TagsBoxView {
   _parentEl = document.querySelector("#ingredients");
-  _buttonEl = this._parentEl.querySelector(".dropdown__btn");
+  _openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
+  _closeButtonEl = null;
 
-  displayBox(type) {
-    const boxState = this._parentEl.className.search("inactive");
+  renderTagsBox(type) {
+    this._openBox();
 
-    const markup = this._generateMarkup();
+    this._closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
 
-    this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    this.addHandlerClose();
   }
 
   _generateMarkup() {
@@ -34,11 +35,35 @@ export class TagsBoxView {
     this._parentEl.innerHTML = "";
   }
 
-  addHandlerDisplay(handler) {
-    this._buttonEl.addEventListener("click", function (e) {
+  _openBox() {
+    this._parentEl.classList.remove("inactive");
+    this._parentEl.classList.add("active");
+
+    const markup = this._generateMarkup();
+
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  _closeBox() {
+    const wrapper = this._parentEl.querySelector(".wrapper");
+
+    this._parentEl.classList.remove("active");
+    this._parentEl.classList.add("inactive");
+
+    wrapper.innerHTML = "";
+  }
+
+  addHandlerOpen(handler) {
+    this._openButtonEl.addEventListener("click", function (e) {
       e.preventDefault();
-      console.log(e);
+
       handler(e);
+    });
+  }
+
+  addHandlerClose() {
+    this._closeButtonEl.addEventListener("click", (e) => {
+      this._closeBox();
     });
   }
 }
