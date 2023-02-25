@@ -2,13 +2,11 @@ import * as model from "./model";
 import resultsView from "./views/resultsView";
 import searchView from "./views/searchView";
 
-import ustensilsTagsBoxView from "./views/tagsBox/ustensilsTagsBoxView";
-import appareilsTagsBoxView from "./views/tagsBox/appareilsTagsBoxView";
-import ingredientsTagsBoxView from "./views/tagsBox/ingredientsTagsBoxView";
+import TagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  ingredientsTagsBoxView.addHandlerDisplay(controlTagsBox);
+  TagsBoxView.addHandlerDisplay(controlTagsBox);
 }
 
 async function controlSearchResults() {
@@ -29,7 +27,7 @@ async function controlSearchResults() {
 
 async function controlTagsBox(e) {
   try {
-    ingredientsTagsBoxView.displayBox(e.srcElement.id);
+    TagsBoxView.displayBox(e.srcElement.id);
   } catch (err) {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }

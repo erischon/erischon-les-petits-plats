@@ -1,5 +1,5 @@
 export class TagsBoxView {
-  _parentEl = document.querySelector("#appareils");
+  _parentEl = document.querySelector("#ingredients");
   _buttonEl = this._parentEl.querySelector(".dropdown__btn");
 
   displayBox(type) {
@@ -29,3 +29,5 @@ export class TagsBoxView {
     });
   }
 }
+
+export default new TagsBoxView();
