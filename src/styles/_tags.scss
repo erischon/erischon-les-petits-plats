@@ -52,6 +52,10 @@
   }
 
   .wrapper {
+    &.hidden {
+      display: none;
+    }
+
     display: block;
 
     position: absolute;
