@@ -6,7 +6,6 @@ import tagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  // searchView.addHandlerSearch(controlTagsBox);
   tagsBoxView.addHandlerOpen(controlTagsBox);
 }
 
@@ -32,7 +31,6 @@ async function controlTagsBox() {
     if (model.state.search.results.length === 0) {
       tagsBoxView.render(model.state.recipes);
     }
-    // console.log("toto", model.state.search.results);
     tagsBoxView.render(model.state.search.results);
 
     //
