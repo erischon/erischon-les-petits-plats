@@ -2,11 +2,12 @@ import * as model from "./model";
 import resultsView from "./views/resultsView";
 import searchView from "./views/searchView";
 
-import TagsBoxView from "./views/tagsBoxView";
+import tagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  TagsBoxView.addHandlerOpen(controlTagsBox);
+  // searchView.addHandlerSearch(controlTagsBox);
+  tagsBoxView.addHandlerOpen(controlTagsBox);
 }
 
 async function controlSearchResults() {
@@ -25,9 +26,18 @@ async function controlSearchResults() {
   }
 }
 
-async function controlTagsBox(e) {
+async function controlTagsBox() {
   try {
-    TagsBoxView.renderTagsBox(e.srcElement.id);
+    // init
+    if (model.state.search.results.length === 0) {
+      tagsBoxView.render(model.state.recipes);
+    }
+    // console.log("toto", model.state.search.results);
+    tagsBoxView.render(model.state.search.results);
+
+    //
+
+    // Render
   } catch (err) {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }

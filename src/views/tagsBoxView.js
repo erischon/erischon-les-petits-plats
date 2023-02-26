@@ -1,9 +1,13 @@
 export class TagsBoxView {
   _parentEl = document.querySelector("#ingredients");
   _openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
-  _closeButtonEl = null;
+  _closeButtonEl;
 
-  renderTagsBox(type) {
+  _data;
+
+  render(data, type) {
+    // init
+    this._data = data;
     this._openBox();
 
     this._closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
@@ -24,11 +28,21 @@ export class TagsBoxView {
 
       <div class="results-tag">
         <ul>
-          <li>plusieurs mots longs 1</li>
+        ${this._data.map(this._generateTagList).join("")}
         </ul>
       </div>
     </diV>
     `;
+  }
+
+  _generateTagList(results) {
+    return results.ingredients
+      .map((ingredient) => {
+        return `
+      <li>${ingredient.ingredient}</li>
+      `;
+      })
+      .join("");
   }
 
   _clear() {

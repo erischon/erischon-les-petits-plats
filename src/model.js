@@ -30,15 +30,21 @@ function searchRecipe(query, recipes) {
   return updatedRecipeList;
 }
 
+async function getRecipes() {
+  state.recipes = await getJSON();
+}
+
 export async function loadSearchResults(searchTerms) {
   try {
     state.search.query = createQuery(searchTerms);
-    const data = await getJSON();
 
-    const results = searchRecipe(state.search.query, data);
+    const results = searchRecipe(state.search.query, state.recipes);
 
     state.search.results = results;
   } catch (err) {
     console.error(err);
   }
 }
+
+// init recipes
+getRecipes();
