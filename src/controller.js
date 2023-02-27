@@ -29,7 +29,7 @@ async function controlTagsBox() {
   try {
     // init
     if (model.state.search.results.length === 0) {
-      tagsBoxView.render(model.state.recipes);
+      return tagsBoxView.render(model.state.recipes);
     }
     tagsBoxView.render(model.state.search.results);
 
