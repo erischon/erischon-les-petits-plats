@@ -37,9 +37,17 @@ async function getRecipes() {
 
 export async function loadSearchResults(searchTerms) {
   try {
-    state.search.query = createQuery(searchTerms);
+    state.search.query = searchTerms;
 
-    const results = searchRecipe(state.search.query, state.recipes);
+    if (state.search.query.length < 3) {
+      proxySearch.results = [];
+      return;
+    }
+
+    const results = searchRecipe(
+      createQuery(state.search.query),
+      state.recipes
+    );
 
     proxySearch.results = results;
   } catch (err) {

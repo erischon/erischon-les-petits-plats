@@ -18,6 +18,10 @@ export class TagsBoxView {
   }
 
   generateNewList(data) {
+    if (this._parentEl.classList.value.search("inactive") > 0) {
+      return;
+    }
+
     this._data = data;
     this._clear();
 
@@ -62,18 +66,13 @@ export class TagsBoxView {
   _openBox() {
     this._parentEl.classList.remove("inactive");
     this._parentEl.classList.add("active");
-
-    // const markup = this._generateMarkup();
-
-    // this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
   _closeBox() {
-    const wrapper = this._parentEl.querySelector(".wrapper");
-
     this._parentEl.classList.remove("active");
     this._parentEl.classList.add("inactive");
 
+    const wrapper = this._parentEl.querySelector(".wrapper");
     wrapper.innerHTML = "";
   }
 

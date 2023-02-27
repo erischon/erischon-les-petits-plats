@@ -10,6 +10,8 @@ class ResultsView {
 
     this._data = data;
 
+    console.log("avant", this._data.length);
+
     const markup = this._generateMarkup();
     this._clear();
 

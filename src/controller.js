@@ -13,13 +13,14 @@ async function controlSearchResults() {
   try {
     // Get
     const query = searchView.getQuery();
-    if (!query || query.length < 3) return;
+    // if (!query || query.length < 3) return;
+    if (!query) return;
 
     // Load
     await model.loadSearchResults(query);
 
     // Render
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.state.search.results, model.state.search.query);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
   }
