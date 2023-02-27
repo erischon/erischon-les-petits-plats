@@ -6,7 +6,6 @@ import tagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  tagsBoxView.addHandlerOpen(controlTagsBox);
 }
 
 async function controlSearchResults() {
@@ -32,14 +31,15 @@ async function controlTagsBox() {
     if (model.state.search.results.length === 0) {
       return tagsBoxView.render(model.state.recipes);
     }
-    tagsBoxView.render(model.state.search.results);
 
     //
 
     // Render
+    tagsBoxView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }
 }
+controlTagsBox();
 
 init();
