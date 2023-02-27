@@ -1,5 +1,7 @@
 import { getJSON } from "./helpers";
-import tagsBoxView from "./views/tagsBoxView";
+
+import resultsView from "./views/resultsView";
+import resultsByTagView from "./views/resultsByTagView";
 
 export const state = {
   recipes: {},
@@ -82,7 +84,6 @@ export async function loadSearchResultsByTag(searchTerms) {
     }
 
     const results = searchRecipeByTag(createQuery(query), state.recipes);
-    console.log("======results", proxySearch.results);
 
     proxySearch.results = results;
   } catch (err) {
@@ -95,7 +96,8 @@ let handlerProxySearch = {
     obj[prop] = value;
 
     if (prop === "results") {
-      tagsBoxView.generateNewList(obj[prop]);
+      resultsView.render(obj[prop]);
+      resultsByTagView.render(obj[prop]);
     }
 
     return true;

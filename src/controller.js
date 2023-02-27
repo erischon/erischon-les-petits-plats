@@ -23,7 +23,7 @@ async function controlSearchResults() {
     await model.loadSearchResults(query);
 
     // Render
-    resultsView.render(model.state.search.results, model.state.search.query);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
   }
