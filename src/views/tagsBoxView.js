@@ -10,9 +10,19 @@ export class TagsBoxView {
     this._data = data;
     this._openBox();
 
-    this._closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
+    const markup = this._generateMarkup();
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
 
+    this._closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
     this.addHandlerClose();
+  }
+
+  generateNewList(data) {
+    this._data = data;
+    this._clear();
+
+    const markup = this._generateMarkup();
+    this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
   _generateMarkup() {
@@ -53,9 +63,9 @@ export class TagsBoxView {
     this._parentEl.classList.remove("inactive");
     this._parentEl.classList.add("active");
 
-    const markup = this._generateMarkup();
+    // const markup = this._generateMarkup();
 
-    this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    // this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
   _closeBox() {

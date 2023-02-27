@@ -1,4 +1,5 @@
 import { getJSON } from "./helpers";
+import tagsBoxView from "./views/tagsBoxView";
 
 export const state = {
   recipes: {},
@@ -40,11 +41,25 @@ export async function loadSearchResults(searchTerms) {
 
     const results = searchRecipe(state.search.query, state.recipes);
 
-    state.search.results = results;
+    proxySearch.results = results;
   } catch (err) {
     console.error(err);
   }
 }
+
+let handlerProxySearch = {
+  set: function (obj, prop, value) {
+    obj[prop] = value;
+
+    if (prop === "results") {
+      tagsBoxView.generateNewList(obj[prop]);
+    }
+
+    return true;
+  },
+};
+
+let proxySearch = new Proxy(state.search, handlerProxySearch);
 
 // init recipes
 getRecipes();
