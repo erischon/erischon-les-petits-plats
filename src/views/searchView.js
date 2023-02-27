@@ -10,6 +10,7 @@ class SearchView {
   addHandlerSearch(handler) {
     this._parentEl.addEventListener("input", function (e) {
       e.preventDefault();
+
       handler();
     });
   }

@@ -36,6 +36,18 @@ function searchRecipe(query, recipes) {
   return updatedRecipeList;
 }
 
+function searchRecipeByTag(query, recipes) {
+  let updatedRecipeList = [];
+
+  recipes.map((recipe) => {
+    if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
+      updatedRecipeList.push(recipe);
+    }
+  });
+
+  return updatedRecipeList;
+}
+
 async function getRecipes() {
   state.recipes = await getJSON();
 }
@@ -53,6 +65,24 @@ export async function loadSearchResults(searchTerms) {
       createQuery(state.search.query),
       state.recipes
     );
+
+    proxySearch.results = results;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function loadSearchResultsByTag(searchTerms) {
+  try {
+    const query = searchTerms;
+
+    if (query.length < 3) {
+      proxySearch.results = [];
+      return;
+    }
+
+    const results = searchRecipeByTag(createQuery(query), state.recipes);
+    console.log("======results", proxySearch.results);
 
     proxySearch.results = results;
   } catch (err) {

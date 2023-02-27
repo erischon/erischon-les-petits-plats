@@ -1,11 +1,15 @@
 import * as model from "./model";
-import resultsView from "./views/resultsView";
+
 import searchView from "./views/searchView";
+import resultsView from "./views/resultsView";
+import searchByTagView from "./views/searchByTagView";
+import resultsByTagView from "./views/resultsByTagView";
 
 import tagsBoxView from "./views/tagsBoxView";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
+  searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 }
 
 async function controlSearchResults() {
@@ -25,6 +29,23 @@ async function controlSearchResults() {
   }
 }
 
+async function controlSearchResultsByTag() {
+  try {
+    // Get
+    const query = searchByTagView.getQuery();
+    if (!query) return;
+    console.log("======query", query);
+
+    // Load
+    await model.loadSearchResultsByTag(query);
+
+    // Render
+    resultsByTagView.render(model.state.search.results);
+  } catch (err) {
+    console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
+  }
+}
+
 async function controlTagsBox() {
   try {
     // init
@@ -40,6 +61,5 @@ async function controlTagsBox() {
     console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }
 }
-controlTagsBox();
 
 init();
