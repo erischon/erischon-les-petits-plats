@@ -7,6 +7,11 @@ export const state = {
     query: "",
     results: [],
   },
+  tagsBox: {
+    ingredients: true,
+    appareils: false,
+    ustensils: false,
+  },
 };
 
 function createQuery(searchTerms) {
