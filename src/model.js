@@ -45,13 +45,31 @@ function searchRecipe(query, recipes) {
 function searchRecipeByTag(query, recipes) {
   let updatedRecipeList = [];
 
-  recipes.map((recipe) => {
-    if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
-      updatedRecipeList.push(recipe);
-    }
-  });
+  if (state.activeTagsBox === "ingredients") {
+    recipes.map((recipe) => {
+      if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
+        updatedRecipeList.push(recipe);
+      }
+    });
 
-  return updatedRecipeList;
+    return updatedRecipeList;
+  } else if (state.activeTagsBox === "appareils") {
+    recipes.map((recipe) => {
+      if (query.test(recipe.appliance)) {
+        updatedRecipeList.push(recipe);
+      }
+    });
+
+    return updatedRecipeList;
+  } else if (state.activeTagsBox === "ustensiles") {
+    recipes.map((recipe) => {
+      if (query.test(recipe.ustensils.map((ustensil) => ustensil))) {
+        updatedRecipeList.push(recipe);
+      }
+    });
+
+    return updatedRecipeList;
+  }
 }
 
 async function getRecipes() {
@@ -81,6 +99,7 @@ export async function loadSearchResults(searchTerms) {
 export async function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;
+    const type = state.activeTagsBox;
 
     if (query.length < 3) {
       proxySearch.results = [];

@@ -51,10 +51,11 @@ async function controlSearchResultsByTag(type) {
     // Get
     const query = searchByTagView.getQuery();
     if (!query) return;
+    // console.log("======query", query);
 
     // Load
-    const test = await model.loadSearchResultsByTag(query);
-    console.log("======test", test);
+    await model.loadSearchResultsByTag(query, model.state.activeTagsBox);
+    console.log("======results", model.state.search.results);
 
     // Render
     // resultsByTagView.render(model.state.search.results);
