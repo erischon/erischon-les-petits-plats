@@ -70,6 +70,8 @@
     opacity: 1;
     z-index: 10;
 
+    background-color: inherit;
+
     .search-tag {
       display: flex;
       justify-content: space-between;
@@ -84,7 +86,7 @@
       border-top-right-radius: 5px;
 
       font-size: 18px;
-      background-color: #3282f7;
+      // background-color: #3282f7;
 
       input {
         width: 100%;
@@ -113,7 +115,7 @@
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
 
-      background-color: #3282f7;
+      // background-color: #3282f7;
 
       ul {
         display: grid;
