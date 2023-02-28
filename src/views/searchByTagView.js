@@ -1,15 +1,4 @@
 class SearchbyTagView {
-  // _parentEl = document.querySelector(`.searchByTag__form--${type}`);
-  _parentEl;
-
-  getQuery(type) {
-    const query = this._parentEl.querySelector(
-      `.searchByTag__input--${type}`
-    ).value;
-
-    return query;
-  }
-
   addHandlerSearch(handler) {
     this._parentEl.addEventListener("input", function (e) {
       e.preventDefault();
@@ -19,4 +8,16 @@ class SearchbyTagView {
   }
 }
 
-export default new SearchbyTagView();
+export class SearchByIngredients extends SearchbyTagView {
+  _parentEl = document.querySelector(`.searchByTag__form--ingredients`);
+
+  getQuery() {
+    const query = this._parentEl.querySelector(
+      `.searchByTag__input--ingredients`
+    ).value;
+
+    console.log(this._parentEl);
+
+    return query;
+  }
+}

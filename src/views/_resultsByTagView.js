@@ -1,9 +1,11 @@
 class ResultsByTagView {
   _data;
 
-  render(data) {
+  render(data, type) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
+
+    // if (!type) return;
 
     this._data = data;
 
@@ -11,6 +13,24 @@ class ResultsByTagView {
     this._clear();
 
     this._parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  _generateMarkup() {
+    return `
+        <ul>
+        ${this._data.map(this._generateTagList).join("")}
+        </ul>
+    `;
+  }
+
+  _generateTagList(results) {
+    return results.ingredients
+      .map((ingredient) => {
+        return `
+      <li>${ingredient.ingredient}</li>
+      `;
+      })
+      .join("");
   }
 
   _clear() {
@@ -30,44 +50,9 @@ class ResultsByTagView {
   }
 }
 
+export default new ResultsByTagView();
+
 export class AppareilsTagsView extends ResultsByTagView {
   _parentEl = document.querySelector(`.resultsByTag__appareils`);
   _errorMessage = `No recipes found for your query! Please try again`;
-
-  _generateMarkup() {
-    return `
-        <ul>
-        ${this._data.map(this._generateTagList).join("")}
-        </ul>
-    `;
-  }
-
-  _generateTagList(results) {
-    return `
-      <li>${results.appliance}</li>
-      `;
-  }
-}
-
-export class IngredientsTagsView extends ResultsByTagView {
-  _parentEl = document.querySelector(`.resultsByTag__ingredients`);
-  _errorMessage = `No recipes found for your query! Please try again`;
-
-  _generateMarkup() {
-    return `
-        <ul>
-        ${this._data.map(this._generateTagList).join("")}
-        </ul>
-    `;
-  }
-
-  _generateTagList(results) {
-    return results.ingredients
-      .map((ingredient) => {
-        return `
-      <li>${ingredient.ingredient}</li>
-      `;
-      })
-      .join("");
-  }
 }

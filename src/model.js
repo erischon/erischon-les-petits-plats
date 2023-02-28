@@ -1,7 +1,8 @@
 import { getJSON } from "./helpers";
 
 import resultsView from "./views/resultsView";
-import resultsByTagView from "./views/resultsByTagView";
+
+import { ResultsByTagsFactory } from "./factory";
 
 export const state = {
   recipes: {},
@@ -12,8 +13,11 @@ export const state = {
   activeTagsBox: "",
 };
 
-export function getActiveTagsBox(type) {
-  proxyTagsBox.activeTagsBox = type;
+export function getActiveTagsBox() {
+  const openTagsBoxEl = document.querySelector(".active");
+  if (!openTagsBoxEl) return;
+
+  proxyTagsBox.activeTagsBox = openTagsBoxEl.id;
 }
 
 function createQuery(searchTerms) {
@@ -97,7 +101,6 @@ let handlerProxySearch = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
-      resultsByTagView.render(obj[prop], state.activeTagsBox);
     }
 
     if (prop === "activeTagsBox") {
