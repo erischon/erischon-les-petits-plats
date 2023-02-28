@@ -1,8 +1,11 @@
-export class TagsBoxView {
-  _parentEl;
-
-  addHandlerOpen(type) {
+export default class TagsBoxView {
+  constructor(type) {
     this._parentEl = document.querySelector(`#${type}`);
+    this._addHandlerOpen();
+    this._addHandlerClose();
+  }
+
+  _addHandlerOpen() {
     const openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
 
     openButtonEl.addEventListener("click", (e) => {
@@ -10,16 +13,20 @@ export class TagsBoxView {
     });
   }
 
-  addHandlerClose(type) {
-    this._parentEl = document.querySelector(`#${type}`);
+  _addHandlerClose() {
     const closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
 
     closeButtonEl.addEventListener("click", (e) => {
-      this._closeBox();
+      this._closeBox(this._parentEl);
     });
   }
 
   _openBox() {
+    const otherOpenEl = document.querySelector(".active");
+    if (otherOpenEl) {
+      this._closeBox(otherOpenEl);
+    }
+
     this._parentEl.classList.remove("inactive");
     this._parentEl.classList.add("active");
 
@@ -27,13 +34,11 @@ export class TagsBoxView {
     wrapper.classList.remove("hidden");
   }
 
-  _closeBox() {
-    this._parentEl.classList.remove("active");
-    this._parentEl.classList.add("inactive");
+  _closeBox(parentEl) {
+    parentEl.classList.remove("active");
+    parentEl.classList.add("inactive");
 
-    const wrapper = this._parentEl.querySelector(".wrapper");
+    const wrapper = parentEl.querySelector(".wrapper");
     wrapper.classList.add("hidden");
   }
 }
-
-export default new TagsBoxView();
