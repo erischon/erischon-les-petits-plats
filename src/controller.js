@@ -9,25 +9,18 @@ import TagsBoxView from "./views/tagsBoxView";
 
 const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
 
-const ingredientsBoxView = new TagsBoxView("ingredients");
-const appareilsBoxView = new TagsBoxView("appareils");
-const ustensilesBoxView = new TagsBoxView("ustensiles");
-
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
-  ingredientsBoxView.addHandlerTagsBox(getBoxsStates);
-  appareilsBoxView.addHandlerTagsBox(getBoxsStates);
-  ustensilesBoxView.addHandlerTagsBox(getBoxsStates);
+  TAGS_TYPES.forEach((type) => {
+    new TagsBoxView(type).addHandlerTagsBox(getBoxsStates);
+  });
 }
 
-async function getBoxsStates(e) {
-  console.log(
-    ingredientsBoxView.boxState.state,
-    appareilsBoxView.boxState.state,
-    ustensilesBoxView.boxState.state
-  );
+async function getBoxsStates() {
+  const openTagsBoxEl = document.querySelector(".active");
+  const TagsBoxType = openTagsBoxEl.id;
 }
 
 async function controlSearchResults() {
