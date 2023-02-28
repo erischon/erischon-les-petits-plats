@@ -7,13 +7,14 @@ import resultsByTagView from "./views/_resultsByTagView";
 
 import TagsBoxView from "./views/tagsBoxView";
 
-import { SearchByTagsFactory } from "./views/searchViewFactory";
+import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";
 
 const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
 
+let searchByTagView = {};
+
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  // searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
   TAGS_TYPES.forEach((type) => {
     new TagsBoxView(type).addHandlerTagsBox(controlTagsBox);
@@ -23,11 +24,9 @@ function init() {
 async function controlTagsBox() {
   model.getActiveTagsBox();
 
-  const searchByTagView = new SearchByTagsFactory(model.state.activeTagsBox);
-  searchByTagView.addHandlerSearch(
-    controlSearchResultsByTag(model.state.activeTagsBox)
-  );
-  // controlSearchResultsByTag();
+  searchByTagView = new SearchByTagsViewFactory(model.state.activeTagsBox);
+
+  searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 }
 
 async function controlSearchResults() {
@@ -48,19 +47,17 @@ async function controlSearchResults() {
 }
 
 async function controlSearchResultsByTag(type) {
-  const searchByTagView = new SearchByTagsFactory(model.state.activeTagsBox);
-
   try {
     // Get
     const query = searchByTagView.getQuery();
     if (!query) return;
-    console.log("======query", query);
 
     // Load
-    await model.loadSearchResultsByTag(query);
+    const test = await model.loadSearchResultsByTag(query);
+    console.log("======test", test);
 
     // Render
-    resultsByTagView.render(model.state.search.results);
+    // resultsByTagView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }

@@ -16,7 +16,29 @@ export class SearchByIngredients extends SearchbyTagView {
       `.searchByTag__input--ingredients`
     ).value;
 
-    console.log(this._parentEl);
+    return query;
+  }
+}
+
+export class SearchByAppareils extends SearchbyTagView {
+  _parentEl = document.querySelector(`.searchByTag__form--appareils`);
+
+  getQuery() {
+    const query = this._parentEl.querySelector(
+      `.searchByTag__input--appareils`
+    ).value;
+
+    return query;
+  }
+}
+
+export class SearchByUstensiles extends SearchbyTagView {
+  _parentEl = document.querySelector(`.searchByTag__form--ustensiles`);
+
+  getQuery() {
+    const query = this._parentEl.querySelector(
+      `.searchByTag__input--ustensiles`
+    ).value;
 
     return query;
   }
