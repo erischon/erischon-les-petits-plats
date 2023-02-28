@@ -1,76 +1,20 @@
-export class TagsBoxViewIngredients {
-  _parentEl = document.querySelector("#ingredients");
-  _openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
-  _closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
+export class TagsBoxView {
+  _parentEl;
 
-  // _data;
+  addHandlerOpen(type) {
+    this._parentEl = document.querySelector(`#${type}`);
+    const openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
 
-  // render(data, type) {
-  //   // init
-  //   this._data = data;
-  //   this._openBox();
-
-  //   const markup = this._generateMarkup();
-  //   this._parentEl.insertAdjacentHTML("afterbegin", markup);
-
-  //   this._closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
-  //   this.addHandlerClose();
-  // }
-
-  // generateNewList(data) {
-  //   if (this._parentEl.classList.value.search("inactive") > 0) {
-  //     return;
-  //   }
-
-  //   this._data = data;
-  //   this._clear();
-
-  //   const markup = this._generateMarkup();
-  //   this._parentEl.insertAdjacentHTML("afterbegin", markup);
-  // }
-
-  // _generateMarkup() {
-  //   return `
-  //   <div class="wrapper">
-  //     <div class="search-tag">
-  //       <input type="text" placeholder="Rechercher un ingrédient" />
-
-  //       <button class="dropdown__btn close">
-  //         <i class="fa fa-chevron-up"></i>
-  //       </button>
-  //     </div>
-
-  //     <div class="results-tag">
-  //       <ul>
-  //       ${this._data.map(this._generateTagList).join("")}
-  //       </ul>
-  //     </div>
-  //   </diV>
-  //   `;
-  // }
-
-  // _generateTagList(results) {
-  //   return results.ingredients
-  //     .map((ingredient) => {
-  //       return `
-  //     <li>${ingredient.ingredient}</li>
-  //     `;
-  //     })
-  //     .join("");
-  // }
-
-  // _clear() {
-  //   this._parentEl.innerHTML = "";
-  // }
-
-  addHandlerOpen(handler) {
-    this._openButtonEl.addEventListener("click", (e) => {
+    openButtonEl.addEventListener("click", (e) => {
       this._openBox();
     });
   }
 
-  addHandlerClose() {
-    this._closeButtonEl.addEventListener("click", (e) => {
+  addHandlerClose(type) {
+    this._parentEl = document.querySelector(`#${type}`);
+    const closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
+
+    closeButtonEl.addEventListener("click", (e) => {
       this._closeBox();
     });
   }
@@ -92,4 +36,4 @@ export class TagsBoxViewIngredients {
   }
 }
 
-export default new TagsBoxViewIngredients();
+export default new TagsBoxView();

@@ -5,14 +5,16 @@ import resultsView from "./views/resultsView";
 import searchByTagView from "./views/searchByTagView";
 import resultsByTagView from "./views/resultsByTagView";
 
-import tagsBoxView from "./views/tagsBoxViewIngredients";
+import tagsBoxView from "./views/tagsBoxView";
+
+const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
-  tagsBoxView.addHandlerOpen();
-  tagsBoxView.addHandlerClose();
+  tagsBoxView.addHandlerOpen("appareils");
+  tagsBoxView.addHandlerClose("appareils");
 }
 
 async function controlSearchResults() {
