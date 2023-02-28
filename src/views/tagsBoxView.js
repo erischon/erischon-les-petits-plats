@@ -3,12 +3,18 @@ export default class TagsBoxView {
     this._parentEl = document.querySelector(`#${type}`);
     this._addHandlerOpen();
     this._addHandlerClose();
+    this.boxState = {
+      name: type,
+      state: false,
+    };
   }
 
   _addHandlerOpen() {
     const openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
 
     openButtonEl.addEventListener("click", (e) => {
+      this.boxState.state = true;
+      console.log("======type", this.boxState);
       this._openBox();
     });
   }

@@ -14,9 +14,12 @@ function init() {
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
   TAGS_TYPES.forEach((type) => {
-    const tagsBoxView = new TagsBoxView(type);
+    const box = new TagsBoxView(type);
+    console.log(box);
   });
 }
+
+async function getBoxsStates() {}
 
 async function controlSearchResults() {
   try {
@@ -36,6 +39,8 @@ async function controlSearchResults() {
 }
 
 async function controlSearchResultsByTag() {
+  // je dois savoir quelle box est ouverte et je sais qu'il n'y en a qu'une
+
   try {
     // Get
     const query = searchByTagView.getQuery();
@@ -49,22 +54,6 @@ async function controlSearchResultsByTag() {
     resultsByTagView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
-  }
-}
-
-async function controlTagsBox() {
-  try {
-    // init
-    if (model.state.search.results.length === 0) {
-      return tagsBoxView.render(model.state.recipes);
-    }
-
-    //
-
-    // Render
-    tagsBoxView.render(model.state.search.results);
-  } catch (err) {
-    console.error(`🛑⚡\nError controlTagsBox()\n${err}\n ⚡🛑`);
   }
 }
 
