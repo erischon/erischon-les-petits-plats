@@ -1,25 +1,38 @@
 export default class TagsBoxView {
   constructor(type) {
     this._parentEl = document.querySelector(`#${type}`);
-    this._addHandlerOpen();
-    this._addHandlerClose();
+
+    this._addEventOpen();
+    this._addEventClose();
+
     this.boxState = {
       name: type,
       state: false,
     };
   }
 
-  _addHandlerOpen() {
-    const openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
+  getState() {
+    return this.boxState;
+  }
 
-    openButtonEl.addEventListener("click", (e) => {
-      this.boxState.state = true;
-      console.log("======type", this.boxState);
-      this._openBox();
+  addHandlerTagsBox(handler) {
+    this._parentEl.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      handler(e);
     });
   }
 
-  _addHandlerClose() {
+  _addEventOpen() {
+    const openButtonEl = this._parentEl.querySelector(".dropdown__btn.open");
+
+    openButtonEl.addEventListener("click", (e) => {
+      this._openBox();
+      this.boxState.state = true;
+    });
+  }
+
+  _addEventClose() {
     const closeButtonEl = this._parentEl.querySelector(".dropdown__btn.close");
 
     closeButtonEl.addEventListener("click", (e) => {

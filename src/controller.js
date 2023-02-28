@@ -9,17 +9,26 @@ import TagsBoxView from "./views/tagsBoxView";
 
 const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
 
+const ingredientsBoxView = new TagsBoxView("ingredients");
+const appareilsBoxView = new TagsBoxView("appareils");
+const ustensilesBoxView = new TagsBoxView("ustensiles");
+
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
-  TAGS_TYPES.forEach((type) => {
-    const box = new TagsBoxView(type);
-    console.log(box);
-  });
+  ingredientsBoxView.addHandlerTagsBox(getBoxsStates);
+  appareilsBoxView.addHandlerTagsBox(getBoxsStates);
+  ustensilesBoxView.addHandlerTagsBox(getBoxsStates);
 }
 
-async function getBoxsStates() {}
+async function getBoxsStates(e) {
+  console.log(
+    ingredientsBoxView.boxState.state,
+    appareilsBoxView.boxState.state,
+    ustensilesBoxView.boxState.state
+  );
+}
 
 async function controlSearchResults() {
   try {
