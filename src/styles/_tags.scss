@@ -46,7 +46,8 @@
   }
 
   &.active {
-    width: 680px;
+    width: 600px;
+    // width: 680px;
     min-width: 170px;
     max-width: 680px;
   }
@@ -62,6 +63,7 @@
     top: 0;
     left: 0;
 
+    // width: 680px;
     width: 100%;
 
     border-top-left-radius: 5px;
@@ -109,7 +111,9 @@
     .resultsByTag {
       margin: 0;
       padding: 0 20px 20px 20px;
-      width: 680px;
+
+      width: 100%;
+      // width: 600px;
       max-height: 400px;
 
       border-bottom-left-radius: 5px;
@@ -132,6 +136,7 @@
         padding: 5px;
         list-style: none;
         color: #ffffff;
+        font-size: 0.95rem;
       }
     }
 
