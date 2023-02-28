@@ -9,12 +9,12 @@ export const state = {
     query: "",
     results: [],
   },
-  tagsBox: {
-    ingredients: true,
-    appareils: false,
-    ustensils: false,
-  },
+  activeTagsBox: "",
 };
+
+export function getActiveTagsBox(type) {
+  proxyTagsBox.activeTagsBox = type;
+}
 
 function createQuery(searchTerms) {
   const query = new RegExp(searchTerms, "gi");
@@ -97,7 +97,11 @@ let handlerProxySearch = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
-      resultsByTagView.render(obj[prop]);
+      resultsByTagView.render(obj[prop], state.activeTagsBox);
+    }
+
+    if (prop === "activeTagsBox") {
+      // resultsByTagView.render(obj[prop], state.activeTagsBox);
     }
 
     return true;
@@ -105,6 +109,7 @@ let handlerProxySearch = {
 };
 
 let proxySearch = new Proxy(state.search, handlerProxySearch);
+let proxyTagsBox = new Proxy(state, handlerProxySearch);
 
 // init recipes
 getRecipes();

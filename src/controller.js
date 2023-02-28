@@ -11,16 +11,22 @@ const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
-  searchByTagView.addHandlerSearch(controlSearchResultsByTag);
+  // searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 
   TAGS_TYPES.forEach((type) => {
-    new TagsBoxView(type).addHandlerTagsBox(getBoxsStates);
+    new TagsBoxView(type).addHandlerTagsBox(controlTagsBox);
   });
 }
 
-async function getBoxsStates() {
+async function controlTagsBox() {
   const openTagsBoxEl = document.querySelector(".active");
-  const TagsBoxType = openTagsBoxEl.id;
+  if (!openTagsBoxEl) return;
+
+  model.getActiveTagsBox(openTagsBoxEl.id);
+
+  console.log("===", model.state.activeTagsBox);
+
+  // controlSearchResultsByTag(openTagsBoxEl.id);
 }
 
 async function controlSearchResults() {
@@ -40,12 +46,13 @@ async function controlSearchResults() {
   }
 }
 
-async function controlSearchResultsByTag() {
-  // je dois savoir quelle box est ouverte et je sais qu'il n'y en a qu'une
-
+async function controlSearchResultsByTag(type) {
   try {
+    // check current results
+    console.log("======type", type);
+
     // Get
-    const query = searchByTagView.getQuery();
+    const query = searchByTagView.getQuery(type);
     if (!query) return;
     console.log("======query", query);
 

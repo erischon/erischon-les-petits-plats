@@ -1,14 +1,17 @@
 class ResultsByTagView {
-  _parentEl = document.querySelector(".resultsByTag");
+  _parentEl;
   _errorMessage = `No recipes found for your query! Please try again`;
 
   _data;
 
-  render(data) {
+  render(data, type) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
+    if (!type) return;
+
     this._data = data;
+    this._parentEl = document.querySelector(`.resultsByTag__${type}`);
 
     const markup = this._generateMarkup();
     this._clear();

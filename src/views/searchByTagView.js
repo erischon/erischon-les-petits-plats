@@ -1,9 +1,10 @@
 class SearchbyTagView {
-  _parentEl = document.querySelector(".searchByTag");
+  // _parentEl = document.querySelector(`.searchByTag__form--${type}`);
+  _parentEl;
 
-  getQuery() {
+  getQuery(type) {
     const query = this._parentEl.querySelector(
-      ".searchByTag__ingredient"
+      `.searchByTag__input--${type}`
     ).value;
 
     return query;
