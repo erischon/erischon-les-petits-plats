@@ -5,11 +5,14 @@ import resultsView from "./views/resultsView";
 import searchByTagView from "./views/searchByTagView";
 import resultsByTagView from "./views/resultsByTagView";
 
-import tagsBoxView from "./views/tagsBoxView";
+import tagsBoxView from "./views/tagsBoxViewIngredients";
 
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
+
+  tagsBoxView.addHandlerOpen();
+  tagsBoxView.addHandlerClose();
 }
 
 async function controlSearchResults() {
