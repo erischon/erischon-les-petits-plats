@@ -1,5 +1,5 @@
 import { getJSON } from "./helpers";
-import { proxyTagsBox, proxySearch, proxyTerms } from "./controller";
+import { appProxy } from "./controller";
 
 /**
  * States of the App
@@ -25,7 +25,7 @@ export function getActiveTagsBox() {
   const openTagsBoxEl = document.querySelector(".active");
   if (!openTagsBoxEl) return;
 
-  proxyTagsBox.activeTagsBox = openTagsBoxEl.id;
+  appProxy.tagsBox.activeTagsBox = openTagsBoxEl.id;
 }
 
 /**
@@ -101,16 +101,19 @@ async function getRecipes() {
  */
 export async function loadSearchResults(searchTerms) {
   try {
-    proxyTerms.global = searchTerms;
+    appProxy.terms.global = searchTerms;
 
-    if (proxyTerms.global.length < 3) {
-      proxySearch.results = [];
+    if (appProxy.terms.global.length < 3) {
+      appProxy.search.results = [];
       return;
     }
 
-    const results = searchRecipe(createQuery(proxyTerms.global), state.recipes);
+    const results = searchRecipe(
+      createQuery(appProxy.terms.global),
+      state.recipes
+    );
 
-    proxySearch.results = results;
+    appProxy.search.results = results;
   } catch (err) {
     console.error(err);
   }
@@ -123,16 +126,16 @@ export async function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;
     const type = state.activeTagsBox;
-    proxyTerms[state.activeTagsBox] = query;
+    appProxy.terms[state.activeTagsBox] = query;
 
     if (query.length < 3) {
-      proxySearch.results = [];
+      appProxy.search.results = [];
       return;
     }
 
     const results = searchRecipeByTag(createQuery(query), state.recipes);
 
-    proxySearch.results = results;
+    appProxy.search.results = results;
   } catch (err) {
     console.error(err);
   }

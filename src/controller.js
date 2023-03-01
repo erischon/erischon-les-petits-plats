@@ -79,7 +79,7 @@ async function controlSearchResultsByTag() {
 /**
  *
  */
-export let handlerProxySearch = {
+export let handlerAppProxy = {
   set: function (obj, prop, value) {
     obj[prop] = value;
 
@@ -105,10 +105,16 @@ export let handlerProxySearch = {
   },
 };
 
-let proxySearch = new Proxy(model.state.search, handlerProxySearch);
-let proxyTagsBox = new Proxy(model.state, handlerProxySearch);
-let proxyTerms = new Proxy(model.state.search.terms, handlerProxySearch);
+export let appProxy = {
+  search: new Proxy(model.state.search, handlerAppProxy),
+  tagsBox: new Proxy(model.state, handlerAppProxy),
+  terms: new Proxy(model.state.search.terms, handlerAppProxy),
+};
 
-export { proxySearch, proxyTagsBox, proxyTerms };
+// let proxySearch = new Proxy(model.state.search, handlerProxySearch);
+// let proxyTagsBox = new Proxy(model.state, handlerProxySearch);
+// let proxyTerms = new Proxy(model.state.search.terms, handlerProxySearch);
+
+// export { proxySearch, proxyTagsBox, proxyTerms };
 
 init();
