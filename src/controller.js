@@ -85,11 +85,16 @@ export const handlerAppProxy = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
+      resultsByTagView.render(obj[prop]);
     }
 
     if (prop === "activeTagsBox") {
       // resultsByTagView.render(obj[prop], state.activeTagsBox);
-      console.log(`======l'active box ${prop} a changé`);
+      console.log(
+        "======Etat du state activeTagsBox",
+        model.state.activeTagsBox
+      );
+      // resultsByTagView.render(model.state.search.results);
     }
 
     if (
@@ -98,7 +103,8 @@ export const handlerAppProxy = {
       prop === "appliances" ||
       prop === "utensils"
     ) {
-      console.log(`======la query ${prop} a changé`);
+      // searchView.addHandlerSearch(controlSearchResults);
+      // searchByTagView.addHandlerSearch(controlSearchResultsByTag);
     }
 
     return true;
