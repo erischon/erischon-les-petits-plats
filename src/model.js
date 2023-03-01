@@ -8,7 +8,7 @@ import resultsView from "./views/resultsView";
 export const state = {
   recipes: {},
   search: {
-    queries: {
+    terms: {
       global: "",
       ingredients: "",
       appliances: "",
@@ -102,17 +102,15 @@ async function getRecipes() {
  */
 export async function loadSearchResults(searchTerms) {
   try {
-    proxyQueries.global = searchTerms;
+    console.log("======", searchTerms.class());
+    proxyTerms.global = searchTerms;
 
-    if (proxyQueries.global.length < 3) {
+    if (proxyTerms.global.length < 3) {
       proxySearch.results = [];
       return;
     }
 
-    const results = searchRecipe(
-      createQuery(proxyQueries.global),
-      state.recipes
-    );
+    const results = searchRecipe(createQuery(proxyTerms.global), state.recipes);
 
     proxySearch.results = results;
   } catch (err) {
@@ -127,7 +125,7 @@ export async function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;
     const type = state.activeTagsBox;
-    proxyQueries[state.activeTagsBox] = query;
+    proxyTerms[state.activeTagsBox] = query;
 
     if (query.length < 3) {
       proxySearch.results = [];
@@ -146,7 +144,7 @@ export async function loadSearchResultsByTag(searchTerms) {
 let handlerProxySearch = {
   set: function (obj, prop, value) {
     obj[prop] = value;
-    console.log("======prop", prop);
+
     if (prop === "results") {
       resultsView.render(obj[prop]);
     }
@@ -170,7 +168,7 @@ let handlerProxySearch = {
 
 let proxySearch = new Proxy(state.search, handlerProxySearch);
 let proxyTagsBox = new Proxy(state, handlerProxySearch);
-let proxyQueries = new Proxy(state.search.queries, handlerProxySearch);
+let proxyTerms = new Proxy(state.search.terms, handlerProxySearch);
 
 // init recipes
 getRecipes();
