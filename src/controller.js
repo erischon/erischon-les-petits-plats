@@ -56,7 +56,7 @@ async function controlSearchResults() {
 /**
  * Control the search with tags
  */
-async function controlSearchResultsByTag(type) {
+async function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
@@ -64,8 +64,8 @@ async function controlSearchResultsByTag(type) {
     // console.log("======query", query);
 
     // Load
-    await model.loadSearchResultsByTag(query, model.state.activeTagsBox);
-    console.log("======results", model.state.search.results);
+    await model.loadSearchResultsByTag(query);
+    // console.log("======results", model.state.search.results);
 
     // Render
     // resultsByTagView.render(model.state.search.results);
