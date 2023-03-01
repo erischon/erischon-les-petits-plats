@@ -38,7 +38,7 @@ class ResultsByTagView {
  */
 export class IngredientsTagsView extends ResultsByTagView {
   _parentEl = document.querySelector(`.resultsByTag__ingredients`);
-  _errorMessage = `No recipes found for your query! Please try again`;
+  _errorMessage = `No Ingredients found`;
 
   _generateMarkup() {
     let ingredientsTags = [
@@ -69,7 +69,7 @@ export class IngredientsTagsView extends ResultsByTagView {
  */
 export class AppliancesTagsView extends ResultsByTagView {
   _parentEl = document.querySelector(`.resultsByTag__appliances`);
-  _errorMessage = `No recipes found for your query! Please try again`;
+  _errorMessage = `No Appliances found`;
 
   _generateMarkup() {
     const appliancesTags = [
@@ -95,7 +95,7 @@ export class AppliancesTagsView extends ResultsByTagView {
  */
 export class UtensilsTagsView extends ResultsByTagView {
   _parentEl = document.querySelector(`.resultsByTag__utensils`);
-  _errorMessage = `No recipes found for your query! Please try again`;
+  _errorMessage = `No Utensils found`;
 
   _generateMarkup() {
     let utensilsTags = [
