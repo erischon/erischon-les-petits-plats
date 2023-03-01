@@ -11,6 +11,9 @@ const TAGS_TYPES = ["ingredients", "appliances", "utensils"];
 
 let searchByTagView = {};
 
+/**
+ *
+ */
 function init() {
   searchView.addHandlerSearch(controlSearchResults);
 
@@ -19,6 +22,9 @@ function init() {
   });
 }
 
+/**
+ * Control a Tags Box
+ */
 async function controlTagsBox() {
   model.getActiveTagsBox();
 
@@ -27,6 +33,9 @@ async function controlTagsBox() {
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
 }
 
+/**
+ * Control global search
+ */
 async function controlSearchResults() {
   try {
     // Get
@@ -44,6 +53,9 @@ async function controlSearchResults() {
   }
 }
 
+/**
+ * Control the search with tags
+ */
 async function controlSearchResultsByTag(type) {
   try {
     // Get

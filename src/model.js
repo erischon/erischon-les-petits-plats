@@ -2,8 +2,9 @@ import { getJSON } from "./helpers";
 
 import resultsView from "./views/resultsView";
 
-import { ResultsByTagsFactory } from "./factory";
-
+/**
+ * States of the App
+ */
 export const state = {
   recipes: {},
   search: {
@@ -18,6 +19,9 @@ export const state = {
   activeTagsBox: "",
 };
 
+/**
+ * Finding the active box and set the state with it
+ */
 export function getActiveTagsBox() {
   const openTagsBoxEl = document.querySelector(".active");
   if (!openTagsBoxEl) return;
@@ -25,12 +29,18 @@ export function getActiveTagsBox() {
   proxyTagsBox.activeTagsBox = openTagsBoxEl.id;
 }
 
+/**
+ * Create a query
+ */
 function createQuery(searchTerms) {
   const query = new RegExp(searchTerms, "gi");
 
   return query;
 }
 
+/**
+ *
+ */
 function searchRecipe(query, recipes) {
   let updatedRecipeList = [];
 
@@ -47,6 +57,9 @@ function searchRecipe(query, recipes) {
   return updatedRecipeList;
 }
 
+/**
+ *
+ */
 function searchRecipeByTag(query, recipes) {
   let updatedRecipeList = [];
 
@@ -77,10 +90,16 @@ function searchRecipeByTag(query, recipes) {
   }
 }
 
+/**
+ * Get the original array of recipes
+ */
 async function getRecipes() {
   state.recipes = await getJSON();
 }
 
+/**
+ *
+ */
 export async function loadSearchResults(searchTerms) {
   try {
     proxyQueries.global = searchTerms;
@@ -101,6 +120,9 @@ export async function loadSearchResults(searchTerms) {
   }
 }
 
+/**
+ *
+ */
 export async function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;

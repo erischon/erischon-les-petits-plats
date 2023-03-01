@@ -3,6 +3,9 @@ import {
   IngredientsTagsView,
 } from "./views/resultsByTagView";
 
+/**
+ *
+ */
 export class ResultsByTagsFactory {
   constructor(type) {
     if (type === "ingredients") {
