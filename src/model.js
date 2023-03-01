@@ -7,7 +7,12 @@ import { ResultsByTagsFactory } from "./factory";
 export const state = {
   recipes: {},
   search: {
-    query: "",
+    queries: {
+      global: "",
+      ingredients: "",
+      appliances: "",
+      utensils: "",
+    },
     results: [],
   },
   activeTagsBox: "",
@@ -53,7 +58,7 @@ function searchRecipeByTag(query, recipes) {
     });
 
     return updatedRecipeList;
-  } else if (state.activeTagsBox === "appareils") {
+  } else if (state.activeTagsBox === "appliances") {
     recipes.map((recipe) => {
       if (query.test(recipe.appliance)) {
         updatedRecipeList.push(recipe);
@@ -61,9 +66,9 @@ function searchRecipeByTag(query, recipes) {
     });
 
     return updatedRecipeList;
-  } else if (state.activeTagsBox === "ustensiles") {
+  } else if (state.activeTagsBox === "utensils") {
     recipes.map((recipe) => {
-      if (query.test(recipe.ustensils.map((ustensil) => ustensil))) {
+      if (query.test(recipe.ustensils.map((utensil) => utensil))) {
         updatedRecipeList.push(recipe);
       }
     });
@@ -78,15 +83,15 @@ async function getRecipes() {
 
 export async function loadSearchResults(searchTerms) {
   try {
-    state.search.query = searchTerms;
+    proxyQueries.global = searchTerms;
 
-    if (state.search.query.length < 3) {
+    if (proxyQueries.global.length < 3) {
       proxySearch.results = [];
       return;
     }
 
     const results = searchRecipe(
-      createQuery(state.search.query),
+      createQuery(proxyQueries.global),
       state.recipes
     );
 
@@ -100,6 +105,7 @@ export async function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;
     const type = state.activeTagsBox;
+    proxyQueries[state.activeTagsBox] = query;
 
     if (query.length < 3) {
       proxySearch.results = [];
@@ -118,7 +124,7 @@ export async function loadSearchResultsByTag(searchTerms) {
 let handlerProxySearch = {
   set: function (obj, prop, value) {
     obj[prop] = value;
-
+    console.log("======prop", prop);
     if (prop === "results") {
       resultsView.render(obj[prop]);
     }
@@ -127,12 +133,22 @@ let handlerProxySearch = {
       // resultsByTagView.render(obj[prop], state.activeTagsBox);
     }
 
+    if (
+      prop === "global" ||
+      prop === "ingredients" ||
+      prop === "appliances" ||
+      prop === "utensils"
+    ) {
+      console.log(`======la query ${prop} a changé`);
+    }
+
     return true;
   },
 };
 
 let proxySearch = new Proxy(state.search, handlerProxySearch);
 let proxyTagsBox = new Proxy(state, handlerProxySearch);
+let proxyQueries = new Proxy(state.search.queries, handlerProxySearch);
 
 // init recipes
 getRecipes();

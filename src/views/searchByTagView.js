@@ -20,24 +20,24 @@ export class SearchByIngredients extends SearchbyTagView {
   }
 }
 
-export class SearchByAppareils extends SearchbyTagView {
-  _parentEl = document.querySelector(`.searchByTag__form--appareils`);
+export class SearchByAppliances extends SearchbyTagView {
+  _parentEl = document.querySelector(`.searchByTag__form--appliances`);
 
   getQuery() {
     const query = this._parentEl.querySelector(
-      `.searchByTag__input--appareils`
+      `.searchByTag__input--appliances`
     ).value;
 
     return query;
   }
 }
 
-export class SearchByUstensiles extends SearchbyTagView {
-  _parentEl = document.querySelector(`.searchByTag__form--ustensiles`);
+export class SearchByUtensils extends SearchbyTagView {
+  _parentEl = document.querySelector(`.searchByTag__form--utensils`);
 
   getQuery() {
     const query = this._parentEl.querySelector(
-      `.searchByTag__input--ustensiles`
+      `.searchByTag__input--utensils`
     ).value;
 
     return query;

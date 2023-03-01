@@ -1,5 +1,5 @@
 import {
-  AppareilsTagsView,
+  AppliancesTagsView,
   IngredientsTagsView,
 } from "./views/resultsByTagView";
 
@@ -7,8 +7,8 @@ export class ResultsByTagsFactory {
   constructor(type) {
     if (type === "ingredients") {
       return new IngredientsTagsView();
-    } else if (type === "appareils") {
-      return new AppareilsTagsView();
+    } else if (type === "appliances") {
+      return new AppliancesTagsView();
     } else {
       throw "Unknown type";
     }

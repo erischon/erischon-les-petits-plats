@@ -7,7 +7,7 @@ import TagsBoxView from "./views/tagsBoxView";
 
 import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";
 
-const TAGS_TYPES = ["ingredients", "appareils", "ustensiles"];
+const TAGS_TYPES = ["ingredients", "appliances", "utensils"];
 
 let searchByTagView = {};
 

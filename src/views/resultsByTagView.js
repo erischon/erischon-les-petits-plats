@@ -30,8 +30,8 @@ class ResultsByTagView {
   }
 }
 
-export class AppareilsTagsView extends ResultsByTagView {
-  _parentEl = document.querySelector(`.resultsByTag__appareils`);
+export class AppliancesTagsView extends ResultsByTagView {
+  _parentEl = document.querySelector(`.resultsByTag__appliances`);
   _errorMessage = `No recipes found for your query! Please try again`;
 
   _generateMarkup() {

@@ -1,17 +1,17 @@
 import {
   SearchByIngredients,
-  SearchByAppareils,
-  SearchByUstensiles,
+  SearchByAppliances,
+  SearchByUtensils,
 } from "./searchByTagView";
 
 export class SearchByTagsViewFactory {
   constructor(type) {
     if (type === "ingredients") {
       return new SearchByIngredients();
-    } else if (type === "appareils") {
-      return new SearchByAppareils();
-    } else if (type === "ustensiles") {
-      return new SearchByUstensiles();
+    } else if (type === "appliances") {
+      return new SearchByAppliances();
+    } else if (type === "utensils") {
+      return new SearchByUtensils();
     } else {
       throw "Unknown type";
     }
