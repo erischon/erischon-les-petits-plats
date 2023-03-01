@@ -1,6 +1,5 @@
 import { getJSON } from "./helpers";
-
-import resultsView from "./views/resultsView";
+import { proxyTagsBox, proxySearch, proxyTerms } from "./controller";
 
 /**
  * States of the App
@@ -138,37 +137,6 @@ export async function loadSearchResultsByTag(searchTerms) {
     console.error(err);
   }
 }
-
-// Move to controller
-let handlerProxySearch = {
-  set: function (obj, prop, value) {
-    obj[prop] = value;
-
-    if (prop === "results") {
-      resultsView.render(obj[prop]);
-    }
-
-    if (prop === "activeTagsBox") {
-      // resultsByTagView.render(obj[prop], state.activeTagsBox);
-      console.log(`======l'active box ${prop} a changé`);
-    }
-
-    if (
-      prop === "global" ||
-      prop === "ingredients" ||
-      prop === "appliances" ||
-      prop === "utensils"
-    ) {
-      console.log(`======la query ${prop} a changé`);
-    }
-
-    return true;
-  },
-};
-
-let proxySearch = new Proxy(state.search, handlerProxySearch);
-let proxyTagsBox = new Proxy(state, handlerProxySearch);
-let proxyTerms = new Proxy(state.search.terms, handlerProxySearch);
 
 // init recipes
 getRecipes();

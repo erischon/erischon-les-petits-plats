@@ -76,4 +76,39 @@ async function controlSearchResultsByTag() {
   }
 }
 
+/**
+ *
+ */
+export let handlerProxySearch = {
+  set: function (obj, prop, value) {
+    obj[prop] = value;
+
+    if (prop === "results") {
+      resultsView.render(obj[prop]);
+    }
+
+    if (prop === "activeTagsBox") {
+      // resultsByTagView.render(obj[prop], state.activeTagsBox);
+      console.log(`======l'active box ${prop} a changé`);
+    }
+
+    if (
+      prop === "global" ||
+      prop === "ingredients" ||
+      prop === "appliances" ||
+      prop === "utensils"
+    ) {
+      console.log(`======la query ${prop} a changé`);
+    }
+
+    return true;
+  },
+};
+
+let proxySearch = new Proxy(model.state.search, handlerProxySearch);
+let proxyTagsBox = new Proxy(model.state, handlerProxySearch);
+let proxyTerms = new Proxy(model.state.search.terms, handlerProxySearch);
+
+export { proxySearch, proxyTagsBox, proxyTerms };
+
 init();
