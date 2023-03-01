@@ -102,7 +102,6 @@ async function getRecipes() {
  */
 export async function loadSearchResults(searchTerms) {
   try {
-    console.log("======", searchTerms.class());
     proxyTerms.global = searchTerms;
 
     if (proxyTerms.global.length < 3) {
@@ -151,6 +150,7 @@ let handlerProxySearch = {
 
     if (prop === "activeTagsBox") {
       // resultsByTagView.render(obj[prop], state.activeTagsBox);
+      console.log(`======l'active box ${prop} a changé`);
     }
 
     if (

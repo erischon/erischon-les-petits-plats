@@ -1,3 +1,6 @@
+/**
+ *
+ */
 class ResultsByTagView {
   _data;
 
@@ -30,44 +33,86 @@ class ResultsByTagView {
   }
 }
 
-export class AppliancesTagsView extends ResultsByTagView {
-  _parentEl = document.querySelector(`.resultsByTag__appliances`);
-  _errorMessage = `No recipes found for your query! Please try again`;
-
-  _generateMarkup() {
-    return `
-        <ul>
-        ${this._data.map(this._generateTagList).join("")}
-        </ul>
-    `;
-  }
-
-  _generateTagList(results) {
-    return `
-      <li>${results.appliance}</li>
-      `;
-  }
-}
-
+/**
+ *
+ */
 export class IngredientsTagsView extends ResultsByTagView {
   _parentEl = document.querySelector(`.resultsByTag__ingredients`);
   _errorMessage = `No recipes found for your query! Please try again`;
 
   _generateMarkup() {
+    let ingredientsTags = [
+      ...new Set(
+        this._data.map((recipe) =>
+          recipe.ingredients.map((ingredient) => ingredient.ingredient)
+        )
+      ),
+    ];
+    ingredientsTags = [...new Set(ingredientsTags.flat(1))];
+
     return `
         <ul>
-        ${this._data.map(this._generateTagList).join("")}
+        ${ingredientsTags.map(this._generateTagList).join("")}
         </ul>
     `;
   }
 
   _generateTagList(results) {
-    return results.ingredients
-      .map((ingredient) => {
-        return `
-      <li>${ingredient.ingredient}</li>
+    return `
+      <li>${results}</li>
       `;
-      })
-      .join("");
+  }
+}
+
+/**
+ *
+ */
+export class AppliancesTagsView extends ResultsByTagView {
+  _parentEl = document.querySelector(`.resultsByTag__appliances`);
+  _errorMessage = `No recipes found for your query! Please try again`;
+
+  _generateMarkup() {
+    const appliancesTags = [
+      ...new Set(this._data.map((recipe) => recipe.appliance)),
+    ];
+
+    return `
+        <ul>
+        ${appliancesTags.map(this._generateTagList).join("")}
+        </ul>
+    `;
+  }
+
+  _generateTagList(results) {
+    return `
+      <li>${results}</li>
+      `;
+  }
+}
+
+/**
+ *
+ */
+export class UtensilsTagsView extends ResultsByTagView {
+  _parentEl = document.querySelector(`.resultsByTag__utensils`);
+  _errorMessage = `No recipes found for your query! Please try again`;
+
+  _generateMarkup() {
+    let utensilsTags = [
+      ...new Set(this._data.map((recipe) => recipe.ustensils)),
+    ];
+    utensilsTags = [...new Set(utensilsTags.flat(1))];
+
+    return `
+        <ul>
+        ${utensilsTags.map(this._generateTagList).join("")}
+        </ul>
+    `;
+  }
+
+  _generateTagList(results) {
+    return `
+      <li>${results}</li>
+      `;
   }
 }

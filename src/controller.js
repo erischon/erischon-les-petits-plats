@@ -6,10 +6,12 @@ import resultsView from "./views/resultsView";
 import TagsBoxView from "./views/tagsBoxView";
 
 import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";
+import { ResultsByTagsViewFactory } from "./views/resultsByTagsViewFactory";
 
 const TAGS_TYPES = ["ingredients", "appliances", "utensils"];
 
 let searchByTagView = {};
+let resultsByTagView = {};
 
 /**
  *
@@ -29,8 +31,10 @@ async function controlTagsBox() {
   model.getActiveTagsBox();
 
   searchByTagView = new SearchByTagsViewFactory(model.state.activeTagsBox);
+  resultsByTagView = new ResultsByTagsViewFactory(model.state.activeTagsBox);
 
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
+  resultsByTagView.render(model.state.search.results);
 }
 
 /**
@@ -61,14 +65,12 @@ async function controlSearchResultsByTag() {
     // Get
     const query = searchByTagView.getQuery();
     if (!query) return;
-    // console.log("======query", query);
 
     // Load
     await model.loadSearchResultsByTag(query);
-    // console.log("======results", model.state.search.results);
 
     // Render
-    // resultsByTagView.render(model.state.search.results);
+    resultsByTagView.render(model.state.search.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
