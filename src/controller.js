@@ -3,8 +3,6 @@ import * as model from "./model";
 import searchView from "./views/searchView";
 import resultsView from "./views/resultsView";
 
-import resultsByTagView from "./views/_resultsByTagView";
-
 import TagsBoxView from "./views/tagsBoxView";
 
 import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";

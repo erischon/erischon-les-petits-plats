@@ -114,6 +114,7 @@ export async function loadSearchResultsByTag(searchTerms) {
   }
 }
 
+// Move to controller
 let handlerProxySearch = {
   set: function (obj, prop, value) {
     obj[prop] = value;
