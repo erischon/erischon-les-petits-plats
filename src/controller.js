@@ -89,12 +89,6 @@ export const handlerAppProxy = {
     }
 
     if (prop === "activeTagsBox") {
-      // resultsByTagView.render(obj[prop], state.activeTagsBox);
-      console.log(
-        "======Etat du state activeTagsBox",
-        model.state.activeTagsBox
-      );
-      // resultsByTagView.render(model.state.search.results);
     }
 
     if (
@@ -103,8 +97,6 @@ export const handlerAppProxy = {
       prop === "appliances" ||
       prop === "utensils"
     ) {
-      // searchView.addHandlerSearch(controlSearchResults);
-      // searchByTagView.addHandlerSearch(controlSearchResultsByTag);
     }
 
     return true;
