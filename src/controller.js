@@ -34,7 +34,7 @@ function controlTagsBox() {
   resultsByTagView = new ResultsByTagsViewFactory(model.state.activeTagsBox);
 
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
-  resultsByTagView.render(model.state.search.tagsResults);
+  resultsByTagView.render(model.state.searchRecipe.tagsResults);
 }
 
 /**
@@ -44,7 +44,7 @@ function controlSearchResults() {
   try {
     // Get
     const query = searchView.getQuery();
-    appProxy.terms.global = query;
+    appProxy.terms = query;
 
     if (!query) return;
 
@@ -52,7 +52,7 @@ function controlSearchResults() {
     model.loadSearchResults(query);
 
     // Render
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.state.searchRecipe.results);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
   }
@@ -65,7 +65,7 @@ function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
-    appProxy.terms[model.state.activeTagsBox] = query;
+    appProxy.terms[model.state.activeTagsBox] = query; // a revoir
 
     if (!query) return;
 
@@ -73,7 +73,7 @@ function controlSearchResultsByTag() {
     model.loadSearchResultsByTag(query);
 
     // Render
-    resultsByTagView.render(model.state.search.tagsResults);
+    resultsByTagView.render(model.state.searchRecipe.tagsResults);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
@@ -92,7 +92,7 @@ export const handlerAppProxy = {
 
     if (prop === "tagsResults") {
       if (model.state.activeTagsBox) {
-        resultsByTagView.render(model.state.search.tagsResults);
+        resultsByTagView.render(model.state.searchRecipe.tagsResults);
       }
     }
 
@@ -105,15 +105,15 @@ export const handlerAppProxy = {
       prop === "appliances" ||
       prop === "utensils"
     ) {
-      if (model.state.search.terms.global.length < 3) {
+      if (model.state.searchRecipe.terms.global.length < 3) {
         appProxy.search.results = [];
         appProxy.search.tagsResults = model.state.tags;
       }
 
       if (
-        model.state.search.terms.ingredients.length === 0 ||
-        model.state.search.terms.appliances.length === 0 ||
-        model.state.search.terms.utensils.length === 0
+        model.state.searchRecipe.terms.ingredients.length === 0 ||
+        model.state.searchRecipe.terms.appliances.length === 0 ||
+        model.state.searchRecipe.terms.utensils.length === 0
       ) {
         appProxy.search.tagsResults = model.state.tags;
       }
@@ -124,9 +124,8 @@ export const handlerAppProxy = {
 };
 
 export const appProxy = {
-  search: new Proxy(model.state.search, handlerAppProxy),
+  search: new Proxy(model.state.searchRecipe, handlerAppProxy),
   tagsBox: new Proxy(model.state, handlerAppProxy),
-  terms: new Proxy(model.state.search.terms, handlerAppProxy),
 };
 
 init();

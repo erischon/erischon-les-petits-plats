@@ -7,14 +7,9 @@ import { appProxy } from "./controller";
 export const state = {
   recipes: {},
   tags: {},
-  search: {
-    terms: {
-      global: "",
-      ingredients: "",
-      appliances: "",
-      utensils: "",
-    },
-    results: [],
+  searchRecipe: {
+    terms: "",
+    recipeResults: [],
     tagsResults: {},
   },
   searchTag: {
@@ -115,18 +110,15 @@ export function getTagsResults(results) {
  */
 export function loadSearchResults(searchTerms) {
   try {
-    if (appProxy.terms.global.length < 3) {
+    if (appProxy.terms.length < 3) {
       appProxy.search.results = [];
       return;
     }
 
-    const results = searchRecipe(
-      createQuery(appProxy.terms.global),
-      state.recipes
-    );
+    const results = searchRecipe(createQuery(appProxy.terms), state.recipes);
 
     appProxy.search.results = results;
-    appProxy.search.tagsResults = getTagsResults(state.search.results);
+    appProxy.search.tagsResults = getTagsResults(state.searchRecipe.results);
   } catch (err) {
     console.error(err);
   }
@@ -139,7 +131,7 @@ export function loadSearchResultsByTag(searchTerms) {
   try {
     const results = searchTag(
       createQuery(searchTerms),
-      state.search.tagsResults
+      state.searchRecipe.tagsResults
     );
 
     appProxy.search.tagsResults[state.activeTagsBox] = results;
@@ -160,7 +152,7 @@ export function loadSearchResultsByTag(searchTerms) {
 async function initStates() {
   state.recipes = await getJSON();
   state.tags = getTagsResults(state.recipes);
-  state.search.tagsResults = state.tags;
+  state.searchRecipe.tagsResults = state.tags;
 }
 
 // init recipes
