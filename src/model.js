@@ -93,8 +93,10 @@ function searchRecipeByTag(query, recipes) {
 /**
  * Get the original array of recipes
  */
-async function getRecipes() {
+async function initStates() {
   state.recipes = await getJSON();
+
+  createTagsResults(state.recipes);
 }
 
 /**
@@ -171,4 +173,4 @@ export async function loadSearchResultsByTag(searchTerms) {
 }
 
 // init recipes
-getRecipes();
+initStates();
