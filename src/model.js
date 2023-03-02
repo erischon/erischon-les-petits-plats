@@ -6,6 +6,7 @@ import { appProxy } from "./controller";
  */
 export const state = {
   recipes: {},
+  tags: {},
   search: {
     terms: {
       global: "",
@@ -91,18 +92,9 @@ function searchRecipeByTag(query, recipes) {
 }
 
 /**
- * Get the original array of recipes
- */
-async function initStates() {
-  state.recipes = await getJSON();
-
-  createTagsResults(state.recipes);
-}
-
-/**
  *
  */
-function createTagsResults(results) {
+export function getTagsResults(results) {
   let ingredientsTags = [
     ...new Set(
       results.map((recipe) =>
@@ -117,7 +109,7 @@ function createTagsResults(results) {
   let utensilsTags = [...new Set(results.map((recipe) => recipe.ustensils))];
   utensilsTags = [...new Set(utensilsTags.flat(1))];
 
-  state.search.tagsResults = {
+  return {
     ingredients: ingredientsTags,
     appliances: appliancesTags,
     utensils: utensilsTags,
@@ -127,7 +119,7 @@ function createTagsResults(results) {
 /**
  *
  */
-export async function loadSearchResults(searchTerms) {
+export function loadSearchResults(searchTerms) {
   try {
     appProxy.terms.global = searchTerms;
 
@@ -142,9 +134,7 @@ export async function loadSearchResults(searchTerms) {
     );
 
     appProxy.search.results = results;
-    createTagsResults(results);
-
-    console.log("======tagsResults", state.search.tagsResults);
+    appProxy.search.tagsResults = getTagsResults(state.search.results);
   } catch (err) {
     console.error(err);
   }
@@ -153,7 +143,7 @@ export async function loadSearchResults(searchTerms) {
 /**
  *
  */
-export async function loadSearchResultsByTag(searchTerms) {
+export function loadSearchResultsByTag(searchTerms) {
   try {
     const query = searchTerms;
     const type = state.activeTagsBox;
@@ -170,6 +160,15 @@ export async function loadSearchResultsByTag(searchTerms) {
   } catch (err) {
     console.error(err);
   }
+}
+
+/**
+ * Get the original array of recipes
+ */
+async function initStates() {
+  state.recipes = await getJSON();
+  state.tags = getTagsResults(state.recipes);
+  state.search.tagsResults = state.tags;
 }
 
 // init recipes

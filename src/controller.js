@@ -27,7 +27,7 @@ function init() {
 /**
  * Control a Tags Box
  */
-async function controlTagsBox() {
+function controlTagsBox() {
   model.getActiveTagsBox();
 
   searchByTagView = new SearchByTagsViewFactory(model.state.activeTagsBox);
@@ -40,7 +40,7 @@ async function controlTagsBox() {
 /**
  * Control global search
  */
-async function controlSearchResults() {
+function controlSearchResults() {
   try {
     // Get
     const query = searchView.getQuery();
@@ -48,7 +48,7 @@ async function controlSearchResults() {
     if (!query) return;
 
     // Load
-    await model.loadSearchResults(query);
+    model.loadSearchResults(query);
 
     // Render
     resultsView.render(model.state.search.results);
@@ -60,14 +60,14 @@ async function controlSearchResults() {
 /**
  * Control the search with tags
  */
-async function controlSearchResultsByTag() {
+function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
     if (!query) return;
 
     // Load
-    await model.loadSearchResultsByTag(query);
+    model.loadSearchResultsByTag(query);
 
     // Render
     resultsByTagView.render(model.state.search.results);
@@ -85,7 +85,24 @@ export const handlerAppProxy = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
-      // resultsByTagView.render(obj[prop]);
+      // console.log("======obj[prop]", obj[prop]);
+
+      // if (model.state.activeTagsBox) {
+      //   // console.log("1======active", model.state.activeTagsBox);
+      //   console.log("2======tagsResults", model.state.search.tagsResults);
+
+      //   // resultsByTagView = new ResultsByTagsViewFactory(
+      //   //   model.state.activeTagsBox
+      //   // );
+      //   console.log("3======obj", resultsByTagView);
+      //   resultsByTagView.render(model.state.search.tagsResults);
+      // }
+    }
+
+    if (prop === "tagsResults") {
+      if (model.state.activeTagsBox) {
+        resultsByTagView.render(model.state.search.tagsResults);
+      }
     }
 
     if (prop === "activeTagsBox") {
@@ -97,6 +114,10 @@ export const handlerAppProxy = {
       prop === "appliances" ||
       prop === "utensils"
     ) {
+      if (model.state.search.terms.global.length < 3) {
+        appProxy.search.results = [];
+        appProxy.search.tagsResults = model.state.tags;
+      }
     }
 
     return true;
