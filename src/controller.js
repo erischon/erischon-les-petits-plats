@@ -85,18 +85,6 @@ export const handlerAppProxy = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
-      // console.log("======obj[prop]", obj[prop]);
-
-      // if (model.state.activeTagsBox) {
-      //   // console.log("1======active", model.state.activeTagsBox);
-      //   console.log("2======tagsResults", model.state.search.tagsResults);
-
-      //   // resultsByTagView = new ResultsByTagsViewFactory(
-      //   //   model.state.activeTagsBox
-      //   // );
-      //   console.log("3======obj", resultsByTagView);
-      //   resultsByTagView.render(model.state.search.tagsResults);
-      // }
     }
 
     if (prop === "tagsResults") {
