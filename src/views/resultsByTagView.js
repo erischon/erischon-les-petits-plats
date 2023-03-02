@@ -41,18 +41,9 @@ export class IngredientsTagsView extends ResultsByTagView {
   _errorMessage = `No Ingredients found`;
 
   _generateMarkup() {
-    let ingredientsTags = [
-      ...new Set(
-        this._data.map((recipe) =>
-          recipe.ingredients.map((ingredient) => ingredient.ingredient)
-        )
-      ),
-    ];
-    ingredientsTags = [...new Set(ingredientsTags.flat(1))];
-
     return `
         <ul>
-        ${ingredientsTags.map(this._generateTagList).join("")}
+        ${this._data.ingredients.map(this._generateTagList).join("")}
         </ul>
     `;
   }
@@ -72,13 +63,9 @@ export class AppliancesTagsView extends ResultsByTagView {
   _errorMessage = `No Appliances found`;
 
   _generateMarkup() {
-    const appliancesTags = [
-      ...new Set(this._data.map((recipe) => recipe.appliance)),
-    ];
-
     return `
         <ul>
-        ${appliancesTags.map(this._generateTagList).join("")}
+        ${this._data.appliances.map(this._generateTagList).join("")}
         </ul>
     `;
   }
@@ -98,14 +85,9 @@ export class UtensilsTagsView extends ResultsByTagView {
   _errorMessage = `No Utensils found`;
 
   _generateMarkup() {
-    let utensilsTags = [
-      ...new Set(this._data.map((recipe) => recipe.ustensils)),
-    ];
-    utensilsTags = [...new Set(utensilsTags.flat(1))];
-
     return `
         <ul>
-        ${utensilsTags.map(this._generateTagList).join("")}
+        ${this._data.utensils.map(this._generateTagList).join("")}
         </ul>
     `;
   }

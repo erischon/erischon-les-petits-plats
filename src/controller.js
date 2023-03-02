@@ -34,7 +34,7 @@ async function controlTagsBox() {
   resultsByTagView = new ResultsByTagsViewFactory(model.state.activeTagsBox);
 
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
-  resultsByTagView.render(model.state.search.results);
+  resultsByTagView.render(model.state.search.tagsResults);
 }
 
 /**
@@ -85,7 +85,7 @@ export const handlerAppProxy = {
 
     if (prop === "results") {
       resultsView.render(obj[prop]);
-      resultsByTagView.render(obj[prop]);
+      // resultsByTagView.render(obj[prop]);
     }
 
     if (prop === "activeTagsBox") {

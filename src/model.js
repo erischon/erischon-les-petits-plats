@@ -14,6 +14,7 @@ export const state = {
       utensils: "",
     },
     results: [],
+    tagsResults: {},
   },
   activeTagsBox: "",
 };
@@ -99,6 +100,31 @@ async function getRecipes() {
 /**
  *
  */
+function createTagsResults(results) {
+  let ingredientsTags = [
+    ...new Set(
+      results.map((recipe) =>
+        recipe.ingredients.map((ingredient) => ingredient.ingredient)
+      )
+    ),
+  ];
+  ingredientsTags = [...new Set(ingredientsTags.flat(1))];
+
+  let appliancesTags = [...new Set(results.map((recipe) => recipe.appliance))];
+
+  let utensilsTags = [...new Set(results.map((recipe) => recipe.ustensils))];
+  utensilsTags = [...new Set(utensilsTags.flat(1))];
+
+  state.search.tagsResults = {
+    ingredients: ingredientsTags,
+    appliances: appliancesTags,
+    utensils: utensilsTags,
+  };
+}
+
+/**
+ *
+ */
 export async function loadSearchResults(searchTerms) {
   try {
     appProxy.terms.global = searchTerms;
@@ -114,6 +140,9 @@ export async function loadSearchResults(searchTerms) {
     );
 
     appProxy.search.results = results;
+    createTagsResults(results);
+
+    console.log("======tagsResults", state.search.tagsResults);
   } catch (err) {
     console.error(err);
   }
