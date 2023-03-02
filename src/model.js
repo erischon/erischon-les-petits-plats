@@ -18,7 +18,7 @@ export const state = {
       appliances: "",
       utensils: "",
     },
-    results: {
+    tagResults: {
       ingredients: [],
       appliances: [],
       utensils: [],
@@ -87,7 +87,9 @@ export function getTagsResults(results) {
   let ingredientsTags = [
     ...new Set(
       results.map((recipe) =>
-        recipe.ingredients.map((ingredient) => ingredient.ingredient)
+        recipe.ingredients.map((ingredient) =>
+          ingredient.ingredient.toLowerCase()
+        )
       )
     ),
   ];
@@ -110,15 +112,21 @@ export function getTagsResults(results) {
  */
 export function loadSearchResults(searchTerms) {
   try {
-    if (appProxy.terms.length < 3) {
-      appProxy.search.results = [];
+    if (appProxy.searchRecipe.terms.length < 3) {
+      appProxy.searchRecipe.results = [];
       return;
     }
 
-    const results = searchRecipe(createQuery(appProxy.terms), state.recipes);
+    const results = searchRecipe(
+      createQuery(appProxy.searchRecipe.terms),
+      state.recipes
+    );
 
-    appProxy.search.results = results;
-    appProxy.search.tagsResults = getTagsResults(state.searchRecipe.results);
+    appProxy.searchRecipe.results = results;
+
+    appProxy.searchRecipe.tagsResults = getTagsResults(
+      state.searchRecipe.results
+    );
   } catch (err) {
     console.error(err);
   }
@@ -128,13 +136,14 @@ export function loadSearchResults(searchTerms) {
  *
  */
 export function loadSearchResultsByTag(searchTerms) {
+  console.log("======", state.searchTag);
   try {
     const results = searchTag(
       createQuery(searchTerms),
-      state.searchRecipe.tagsResults
+      state.searchTag.results
     );
 
-    appProxy.search.tagsResults[state.activeTagsBox] = results;
+    appProxy.searchTag.tagResults[state.activeTagsBox] = results;
 
     // mettre à jour les autres keys :
     // 1/ rechercher dans toutes les recipes par type
@@ -153,6 +162,7 @@ async function initStates() {
   state.recipes = await getJSON();
   state.tags = getTagsResults(state.recipes);
   state.searchRecipe.tagsResults = state.tags;
+  state.searchTag.results = state.tags;
 }
 
 // init recipes

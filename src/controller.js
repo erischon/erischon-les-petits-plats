@@ -44,7 +44,7 @@ function controlSearchResults() {
   try {
     // Get
     const query = searchView.getQuery();
-    appProxy.terms = query;
+    appProxy.searchRecipe.terms = query;
 
     if (!query) return;
 
@@ -65,7 +65,7 @@ function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
-    appProxy.terms[model.state.activeTagsBox] = query; // a revoir
+    appProxy.searchTag.terms[model.state.activeTagsBox] = query;
 
     if (!query) return;
 
@@ -73,7 +73,7 @@ function controlSearchResultsByTag() {
     model.loadSearchResultsByTag(query);
 
     // Render
-    resultsByTagView.render(model.state.searchRecipe.tagsResults);
+    resultsByTagView.render(model.state.searchTag.tagResults);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
@@ -85,8 +85,8 @@ function controlSearchResultsByTag() {
 export const handlerAppProxy = {
   set: function (obj, prop, value) {
     obj[prop] = value;
-
-    if (prop === "results") {
+    console.log("======prop", obj[prop]);
+    if (prop === "recipeResults") {
       resultsView.render(obj[prop]);
     }
 
@@ -99,32 +99,38 @@ export const handlerAppProxy = {
     if (prop === "activeTagsBox") {
     }
 
-    if (
-      prop === "global" ||
-      prop === "ingredients" ||
-      prop === "appliances" ||
-      prop === "utensils"
-    ) {
-      if (model.state.searchRecipe.terms.global.length < 3) {
-        appProxy.search.results = [];
-        appProxy.search.tagsResults = model.state.tags;
-      }
-
-      if (
-        model.state.searchRecipe.terms.ingredients.length === 0 ||
-        model.state.searchRecipe.terms.appliances.length === 0 ||
-        model.state.searchRecipe.terms.utensils.length === 0
-      ) {
-        appProxy.search.tagsResults = model.state.tags;
+    if (obj === "ingredient") {
+      if (model.state.activeTagsBox) {
+        resultsByTagView.render(model.state.searchRecipe.tagsResults);
       }
     }
+    // if (
+    //   prop === "global" ||
+    //   prop === "ingredients" ||
+    //   prop === "appliances" ||
+    //   prop === "utensils"
+    // ) {
+    //   if (model.state.searchRecipe.terms.global.length < 3) {
+    //     appProxy.searchRecipe.results = [];
+    //     appProxy.searchRecipe.tagsResults = model.state.tags;
+    //   }
+
+    //   if (
+    //     model.state.searchRecipe.terms.ingredients.length === 0 ||
+    //     model.state.searchRecipe.terms.appliances.length === 0 ||
+    //     model.state.searchRecipe.terms.utensils.length === 0
+    //   ) {
+    //     appProxy.searchRecipe.tagsResults = model.state.tags;
+    //   }
+    // }
 
     return true;
   },
 };
 
 export const appProxy = {
-  search: new Proxy(model.state.searchRecipe, handlerAppProxy),
+  searchRecipe: new Proxy(model.state.searchRecipe, handlerAppProxy),
+  searchTag: new Proxy(model.state.searchTag, handlerAppProxy),
   tagsBox: new Proxy(model.state, handlerAppProxy),
 };
 
