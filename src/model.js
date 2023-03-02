@@ -17,6 +17,18 @@ export const state = {
     results: [],
     tagsResults: {},
   },
+  searchTag: {
+    terms: {
+      ingredients: "",
+      appliances: "",
+      utensils: "",
+    },
+    results: {
+      ingredients: [],
+      appliances: [],
+      utensils: [],
+    },
+  },
   activeTagsBox: "",
 };
 
@@ -61,34 +73,16 @@ function searchRecipe(query, recipes) {
 /**
  *
  */
-function searchRecipeByTag(query, recipes) {
-  let updatedRecipeList = [];
+function searchTag(query, tags) {
+  let updatedTagsList = [];
 
-  if (state.activeTagsBox === "ingredients") {
-    recipes.map((recipe) => {
-      if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
-        updatedRecipeList.push(recipe);
-      }
-    });
+  tags[state.activeTagsBox].map((tag) => {
+    if (query.test(tag)) {
+      updatedTagsList.push(tag);
+    }
+  });
 
-    return updatedRecipeList;
-  } else if (state.activeTagsBox === "appliances") {
-    recipes.map((recipe) => {
-      if (query.test(recipe.appliance)) {
-        updatedRecipeList.push(recipe);
-      }
-    });
-
-    return updatedRecipeList;
-  } else if (state.activeTagsBox === "utensils") {
-    recipes.map((recipe) => {
-      if (query.test(recipe.ustensils.map((utensil) => utensil))) {
-        updatedRecipeList.push(recipe);
-      }
-    });
-
-    return updatedRecipeList;
-  }
+  return updatedTagsList;
 }
 
 /**
@@ -121,8 +115,6 @@ export function getTagsResults(results) {
  */
 export function loadSearchResults(searchTerms) {
   try {
-    appProxy.terms.global = searchTerms;
-
     if (appProxy.terms.global.length < 3) {
       appProxy.search.results = [];
       return;
@@ -145,18 +137,18 @@ export function loadSearchResults(searchTerms) {
  */
 export function loadSearchResultsByTag(searchTerms) {
   try {
-    const query = searchTerms;
-    const type = state.activeTagsBox;
-    appProxy.terms[state.activeTagsBox] = query;
+    const results = searchTag(
+      createQuery(searchTerms),
+      state.search.tagsResults
+    );
 
-    if (query.length < 3) {
-      appProxy.search.results = [];
-      return;
-    }
+    appProxy.search.tagsResults[state.activeTagsBox] = results;
 
-    const results = searchRecipeByTag(createQuery(query), state.recipes);
-
-    appProxy.search.results = results;
+    // mettre à jour les autres keys :
+    // 1/ rechercher dans toutes les recipes par type
+    // 2/ getTagsResult pour type manquant A
+    // 3/ update
+    // 3/ getTagsResult pour type manquant B
   } catch (err) {
     console.error(err);
   }

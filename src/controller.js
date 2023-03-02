@@ -44,7 +44,8 @@ function controlSearchResults() {
   try {
     // Get
     const query = searchView.getQuery();
-    // if (!query || query.length < 3) return;
+    appProxy.terms.global = query;
+
     if (!query) return;
 
     // Load
@@ -64,13 +65,15 @@ function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
+    appProxy.terms[model.state.activeTagsBox] = query;
+
     if (!query) return;
 
     // Load
     model.loadSearchResultsByTag(query);
 
     // Render
-    resultsByTagView.render(model.state.search.results);
+    resultsByTagView.render(model.state.search.tagsResults);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
@@ -104,6 +107,14 @@ export const handlerAppProxy = {
     ) {
       if (model.state.search.terms.global.length < 3) {
         appProxy.search.results = [];
+        appProxy.search.tagsResults = model.state.tags;
+      }
+
+      if (
+        model.state.search.terms.ingredients.length === 0 ||
+        model.state.search.terms.appliances.length === 0 ||
+        model.state.search.terms.utensils.length === 0
+      ) {
         appProxy.search.tagsResults = model.state.tags;
       }
     }
