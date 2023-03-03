@@ -14,6 +14,7 @@ class ResultsByTagView {
     this._clear();
 
     this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    // this._addEvent();
   }
 
   _clear() {
@@ -48,10 +49,21 @@ export class IngredientsTagsView extends ResultsByTagView {
     `;
   }
 
-  _generateTagList(results) {
+  _generateTagList(result) {
     return `
-      <li>${results}</li>
+      <li class="tag-ingredients">${result}</li>
       `;
+  }
+
+  addHandlerTags(handler) {
+    const results = this._parentEl.querySelectorAll(".tag-ingredients");
+
+    results.forEach((result) => {
+      result.addEventListener("click", function (e) {
+        e.preventDefault();
+        handler(e);
+      });
+    });
   }
 }
 
@@ -70,10 +82,21 @@ export class AppliancesTagsView extends ResultsByTagView {
     `;
   }
 
-  _generateTagList(results) {
+  _generateTagList(result) {
     return `
-      <li>${results}</li>
+      <li class="tag-appliances">${result}</li>
       `;
+  }
+
+  addHandlerTags(handler) {
+    const results = this._parentEl.querySelectorAll(".tag-appliances");
+
+    results.forEach((result) => {
+      result.addEventListener("click", function (e) {
+        e.preventDefault();
+        handler(e);
+      });
+    });
   }
 }
 
@@ -92,9 +115,20 @@ export class UtensilsTagsView extends ResultsByTagView {
     `;
   }
 
-  _generateTagList(results) {
+  _generateTagList(result) {
     return `
-      <li>${results}</li>
+      <li class="tag-utensils">${result}</li>
       `;
+  }
+
+  addHandlerTags(handler) {
+    const results = this._parentEl.querySelectorAll(".tag-utensils");
+
+    results.forEach((result) => {
+      result.addEventListener("click", function (e) {
+        e.preventDefault();
+        handler(e);
+      });
+    });
   }
 }

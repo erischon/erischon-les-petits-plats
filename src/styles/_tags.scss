@@ -15,6 +15,12 @@
   color: white;
 }
 
+.tag-ingredients,
+.tag-appliances,
+.tag-utensils {
+  cursor: pointer;
+}
+
 .tag i {
   margin-left: 10px;
   cursor: pointer;

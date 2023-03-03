@@ -35,6 +35,7 @@ function controlTagsBox() {
 
   searchByTagView.addHandlerSearch(controlSearchResultsByTag);
   resultsByTagView.render(model.state.searchRecipe.tagsResults);
+  resultsByTagView.addHandlerTags(controlTags);
 }
 
 /**
@@ -74,9 +75,14 @@ function controlSearchResultsByTag() {
 
     // Render
     resultsByTagView.render(model.state.searchTag.tagResults);
+    resultsByTagView.addHandlerTags(controlTags);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
+}
+
+function controlTags(e) {
+  console.log(e.target.innerText);
 }
 
 /**
@@ -93,17 +99,18 @@ export const handlerAppProxy = {
     if (prop === "tagsResults") {
       if (model.state.activeTagsBox) {
         resultsByTagView.render(model.state.searchRecipe.tagsResults);
+        resultsByTagView.addHandlerTags(controlTags);
       }
     }
 
-    if (prop === "activeTagsBox") {
-    }
+    // if (prop === "activeTagsBox") {
+    // }
 
-    if (obj === "ingredient") {
-      if (model.state.activeTagsBox) {
-        resultsByTagView.render(model.state.searchRecipe.tagsResults);
-      }
-    }
+    // if (obj === "ingredient") {
+    //   if (model.state.activeTagsBox) {
+    //     resultsByTagView.render(model.state.searchRecipe.tagsResults);
+    //   }
+    // }
     // if (
     //   prop === "global" ||
     //   prop === "ingredients" ||
