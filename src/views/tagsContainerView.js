@@ -30,10 +30,10 @@ class TagsContainerView {
   }
 
   addHandlerRemoveTag(handler) {
-    const button = this._parentEl.querySelector(`#${this._tagId}`);
-    const closeButtonEl = button.querySelector(`.tag__close-btn`);
+    const tagEl = this._parentEl.querySelector(`#${this._tagId}`);
+    const closeBtnEl = tagEl.querySelector(`.tag__close-btn`);
 
-    closeButtonEl.addEventListener("click", (e) => {
+    closeBtnEl.addEventListener("click", (e) => {
       handler(e, this._tagId);
     });
   }
