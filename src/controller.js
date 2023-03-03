@@ -4,6 +4,7 @@ import searchView from "./views/searchView";
 import resultsView from "./views/resultsView";
 
 import TagsBoxView from "./views/tagsBoxView";
+import tagsContainerView from "./views/tagsContainerView";
 
 import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";
 import { ResultsByTagsViewFactory } from "./views/resultsByTagsViewFactory";
@@ -82,7 +83,12 @@ function controlSearchResultsByTag() {
 }
 
 function controlTags(e) {
-  console.log(e.target.innerText);
+  tagsContainerView.renderTag(e.target.innerText, model.state.activeTagsBox);
+  tagsContainerView.addHandlerRemoveTag(controlRemoveTag);
+}
+
+function controlRemoveTag(event) {
+  tagsContainerView.removeTag(event.currentTarget.id);
 }
 
 /**
@@ -91,7 +97,7 @@ function controlTags(e) {
 export const handlerAppProxy = {
   set: function (obj, prop, value) {
     obj[prop] = value;
-    console.log("======prop", obj[prop]);
+    // console.log("======prop", obj[prop]);
     if (prop === "recipeResults") {
       resultsView.render(obj[prop]);
     }

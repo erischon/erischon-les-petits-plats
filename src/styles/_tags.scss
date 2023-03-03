@@ -6,6 +6,8 @@
 }
 
 .tag {
+  display: flex;
+
   padding: 10px 20px;
 
   border-radius: 5px;
@@ -21,8 +23,9 @@
   cursor: pointer;
 }
 
-.tag i {
+.tag__close-btn {
   margin-left: 10px;
+  color: white;
   cursor: pointer;
 }
 
