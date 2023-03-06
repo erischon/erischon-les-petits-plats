@@ -2,6 +2,9 @@ import { getJSON } from "./helpers";
 
 import { Event, PropertyChangedArgs } from "./observer";
 
+/**
+ * States of the App
+ */
 class State {
   constructor() {
     this.valueChanged = new Event();
@@ -38,7 +41,7 @@ class State {
       case "recipeResult":
         this.states.searchRecipe.recipeResults = value;
         break;
-      case "tagsResult":
+      case "tagsResults":
         this.states.searchRecipe.tagsResults = value;
         break;
       case "activeTagsBox":
@@ -56,33 +59,6 @@ class State {
 }
 
 export const states = new State();
-
-/**
- * States of the App
- */
-// export const state = {
-//   recipes: {},
-//   tags: {},
-//   searchRecipe: {
-//     terms: "",
-//     recipeResults: [],
-//     tagsResults: {},
-//   },
-//   searchTag: {
-//     terms: {
-//       ingredients: "",
-//       appliances: "",
-//       utensils: "",
-//     },
-//     tagResults: {
-//       ingredients: [],
-//       appliances: [],
-//       utensils: [],
-//     },
-//     selectedTags: [],
-//   },
-//   activeTagsBox: "",
-// };
 
 /**
  * Finding the active box and set the state with it
