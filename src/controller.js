@@ -178,12 +178,13 @@ class handleStateChanges {
       resultsView.render(model.states.states.searchRecipe.recipeResults);
     } else if (sender === this.state && args.name === "tagsResults") {
       if (model.states.states.activeTagsBox) {
-        console.log("======", model.states.states.searchRecipe.tagsResults);
         resultsByTagView.render(model.states.states.searchRecipe.tagsResults);
         resultsByTagView.addHandlerTags(controlTags);
       }
     } else if (sender === this.state && args.name === "selectedTag") {
       console.log(model.states.states.searchTag.selectedTags);
+    } else if (sender === this.state && args.name === "terms") {
+      console.log(model.states.states.searchRecipe.terms);
     }
   }
 }

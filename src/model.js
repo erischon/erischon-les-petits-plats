@@ -170,7 +170,6 @@ export function loadSearchResults(searchTerms) {
  *
  */
 export function loadSearchResultsByTag(searchTerms) {
-  // console.log("======", state.searchTag);
   try {
     const results = searchTag(
       createQuery(searchTerms),
