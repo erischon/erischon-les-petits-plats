@@ -88,6 +88,9 @@ function controlSearchResultsByTag() {
   }
 }
 
+/**
+ *
+ */
 function controlTags(e) {
   tagsContainerView.renderTag(
     e.target.innerText,
@@ -101,6 +104,9 @@ function controlTags(e) {
   });
 }
 
+/**
+ *
+ */
 function controlRemoveTag(event) {
   tagsContainerView.removeTag(event.currentTarget.id);
 }
@@ -172,7 +178,7 @@ class handleStateChanges {
       resultsView.render(model.states.states.searchRecipe.recipeResults);
     } else if (sender === this.state && args.name === "tagsResults") {
       if (model.states.states.activeTagsBox) {
-        console.log("toto");
+        console.log("======", model.states.states.searchRecipe.tagsResults);
         resultsByTagView.render(model.states.states.searchRecipe.tagsResults);
         resultsByTagView.addHandlerTags(controlTags);
       }
