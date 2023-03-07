@@ -73,6 +73,7 @@ function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
+
     model.states.set("searchByTagTerms", {
       type: model.states.states.activeTagsBox,
       terms: query,
@@ -84,8 +85,8 @@ function controlSearchResultsByTag() {
     model.loadSearchResultsByTag(query);
 
     // Render
-    // resultsByTagView.render(model.states.states.searchTag.tagResults);
-    // resultsByTagView.addHandlerTags(controlTags);
+    resultsByTagView.render(model.states.states.searchTag.tagResults);
+    resultsByTagView.addHandlerTags(controlTags);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
@@ -204,6 +205,16 @@ class handleStateChanges {
     } else if (sender === this.state && args.name === "searchByTagTerms") {
       // if there is an open Tags Box
       if (model.states.states.activeTagsBox) {
+        // if terms number in tag search is 0, we reset searchTag.tagsResults with searchRecipe.tagsResults
+        if (
+          model.states.states.searchTag.terms[model.states.states.activeTagsBox]
+            .length === 0
+        ) {
+          model.states.set(
+            "searchByTagResults",
+            model.states.states.searchRecipe.tagsResults
+          );
+        }
       }
     }
   }
