@@ -15,10 +15,10 @@ let searchByTagView = {};
 let resultsByTagView = {};
 
 /**
- *
+ * Init the app
  */
 function init() {
-  searchView.addHandlerSearch(controlSearchResults);
+  searchView.addHandlerSearch(controlRecipeSearch);
 
   TAGS_TYPES.forEach((type) => {
     new TagsBoxView(type).addHandlerTagsBox(controlTagsBox);
@@ -40,15 +40,15 @@ function controlTagsBox() {
     model.states.states.activeTagsBox
   );
 
-  searchByTagView.addHandlerSearch(controlSearchResultsByTag);
+  searchByTagView.addHandlerSearch(controlTagSearch);
   resultsByTagView.render(model.states.states.searchRecipe.tagsResults);
-  resultsByTagView.addHandlerTags(controlTags);
+  resultsByTagView.addHandlerTags(controlTagSelection);
 }
 
 /**
- * Control global search
+ * Control recipe search
  */
-function controlSearchResults() {
+function controlRecipeSearch() {
   try {
     // Get
     const query = searchView.getQuery();
@@ -57,19 +57,19 @@ function controlSearchResults() {
     if (!query) return;
 
     // Load
-    model.loadSearchResults(query);
+    model.loadRecipeSearchResult(query);
 
     // Render
     resultsView.render(model.states.states.searchRecipe.recipeResults);
   } catch (err) {
-    console.error(`🛑⚡\nError controlSearchResults()\n${err}\n ⚡🛑`);
+    console.error(`🛑⚡\nError controlRecipeSearch()\n${err}\n ⚡🛑`);
   }
 }
 
 /**
- * Control the search with tags
+ * Control tag search
  */
-function controlSearchResultsByTag() {
+function controlTagSearch() {
   try {
     // Get
     const query = searchByTagView.getQuery();
@@ -82,95 +82,61 @@ function controlSearchResultsByTag() {
     if (!query) return;
 
     // Load
-    model.loadSearchResultsByTag(query);
+    model.loadTagSearchResult(query);
 
     // Render
     resultsByTagView.render(model.states.states.searchTag.tagResults);
-    resultsByTagView.addHandlerTags(controlTags);
+    resultsByTagView.addHandlerTags(controlTagSelection);
   } catch (err) {
-    console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
+    console.error(`🛑⚡\nError controlTagSearch()\n${err}\n ⚡🛑`);
+  }
+}
+
+/**
+ * Control tag selection
+ */
+function controlTagSelection(e) {
+  tagsContainerView.renderTag(
+    e.target.innerText,
+    model.states.states.activeTagsBox
+  );
+  tagsContainerView.addHandlerRemoveTag(controlTagRemoving);
+
+  model.states.set("selectedTag", {
+    type: model.states.states.activeTagsBox,
+    tag: e.target.innerText,
+  });
+
+  controlSearchRecipeByTag();
+}
+
+/**
+ * Control recipe search by tag selection
+ */
+function controlSearchRecipeByTag() {
+  try {
+    // Get
+
+    // Load
+    model.loadRecipeSearchResultByTag();
+
+    // Render
+    // resultsView.render(model.states.states.searchRecipe.recipeResults);
+  } catch (err) {
+    console.error(`🛑⚡\nError controlRecipeSearch()\n${err}\n ⚡🛑`);
   }
 }
 
 /**
  *
  */
-function controlTags(e) {
-  tagsContainerView.renderTag(
-    e.target.innerText,
-    model.states.states.activeTagsBox
-  );
-  tagsContainerView.addHandlerRemoveTag(controlRemoveTag);
-
-  model.states.set("selectedTag", {
-    type: model.states.states.activeTagsBox,
-    tag: e.target.innerText,
-  });
-}
-
-/**
- *
- */
-function controlRemoveTag(event) {
+function controlTagRemoving(event) {
   tagsContainerView.removeTag(event.currentTarget.id);
 }
 
 /**
- *
+ * Handle state changes
  */
-// export const handlerAppProxy = {
-//   set: function (obj, prop, value) {
-//     obj[prop] = value;
-
-//     // if (prop === "recipeResults") {
-//     //   resultsView.render(obj[prop]);
-//     // }
-
-//     // if (prop === "tagsResults") {
-//     //   if (model.state.activeTagsBox) {
-//     //     resultsByTagView.render(model.state.searchRecipe.tagsResults);
-//     //     resultsByTagView.addHandlerTags(controlTags);
-//     //   }
-//     // }
-
-//     // if (prop === "activeTagsBox") {
-//     // }
-
-//     // if (obj === "ingredient") {
-//     //   if (model.state.activeTagsBox) {
-//     //     resultsByTagView.render(model.state.searchRecipe.tagsResults);
-//     //   }
-//     // }
-//     // if (
-//     //   prop === "global" ||
-//     //   prop === "ingredients" ||
-//     //   prop === "appliances" ||
-//     //   prop === "utensils"
-//     // ) {
-//     //   if (model.state.searchRecipe.terms.global.length < 3) {
-//     //     appProxy.searchRecipe.results = [];
-//     //     appProxy.searchRecipe.tagsResults = model.state.tags;
-//     //   }
-
-//     //   if (
-//     //     model.state.searchRecipe.terms.ingredients.length === 0 ||
-//     //     model.state.searchRecipe.terms.appliances.length === 0 ||
-//     //     model.state.searchRecipe.terms.utensils.length === 0
-//     //   ) {
-//     //     appProxy.searchRecipe.tagsResults = model.state.tags;
-//     //   }
-//     // }
-
-//     return true;
-//   },
-// };
-
-// export const appProxy = {
-//   searchRecipe: new Proxy(model.state.searchRecipe, handlerAppProxy),
-//   searchTag: new Proxy(model.state.searchTag, handlerAppProxy),
-//   tagsBox: new Proxy(model.state, handlerAppProxy),
-// };
-
 class handleStateChanges {
   constructor(state) {
     this.state = state;
@@ -188,7 +154,7 @@ class handleStateChanges {
             resultsByTagView.render(
               model.states.states.searchRecipe.tagsResults
             );
-            resultsByTagView.addHandlerTags(controlTags);
+            resultsByTagView.addHandlerTags(controlTagSelection);
           }
           break;
         case "terms":
@@ -205,7 +171,7 @@ class handleStateChanges {
             resultsByTagView.render(
               model.states.states.searchRecipe.tagsResults
             );
-            resultsByTagView.addHandlerTags(controlTags);
+            resultsByTagView.addHandlerTags(controlTagSelection);
           }
           break;
         case "searchByTagTerms":
@@ -222,6 +188,10 @@ class handleStateChanges {
               );
             }
           }
+          break;
+        case "selectedTag":
+          // lancer une recherche dans les recipes avec le tag sélectionné
+
           break;
         default:
           break;
