@@ -86,7 +86,16 @@ function createQuery(searchTerms) {
 }
 
 /**
- *
+ * Create Array of selected tags query
+ */
+function createTagsQuery(selectedTags) {
+  return selectedTags.map((tag) => {
+    return { type: tag.type, query: createQuery(tag.tag) };
+  });
+}
+
+/**
+ * Search recipes
  */
 function searchRecipe(query, recipes) {
   let updatedRecipeList = [];
@@ -105,7 +114,45 @@ function searchRecipe(query, recipes) {
 }
 
 /**
- *
+ * Search recipes
+ */
+function searchRecipeByTag() {
+  let updatedRecipeList = [];
+  let updatedRecipeListByTag = [];
+
+  const recipeQuery = createQuery(states.states.searchRecipe.terms);
+  const tagsQuery = createTagsQuery(states.states.searchTag.selectedTags);
+
+  console.log(recipeQuery, tagsQuery);
+
+  // liaison entre recherche par tag et recherche par mot clé
+  // meilleure solution : créer une fonction qui va chercher les tags dans les recettes
+
+  states.states.recipes.map((recipe) => {
+    if (
+      recipeQuery.test(recipe.name) ||
+      recipeQuery.test(recipe.description) ||
+      recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
+    ) {
+      updatedRecipeList.push(recipe);
+    }
+  });
+
+  updatedRecipeList.map((recipe) => {
+    if (
+      recipeQuery.test(recipe.name) ||
+      recipeQuery.test(recipe.description) ||
+      recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
+    ) {
+      updatedRecipeListByTag.push(recipe);
+    }
+  });
+
+  return updatedRecipeListByTag;
+}
+
+/**
+ * Search tags
  */
 function searchTag(query, tags) {
   let updatedTagsList = [];
@@ -120,7 +167,7 @@ function searchTag(query, tags) {
 }
 
 /**
- *
+ * Get tags results
  */
 export function getTagsResults(results) {
   let ingredientsTags = [
@@ -147,9 +194,9 @@ export function getTagsResults(results) {
 }
 
 /**
- *
+ * Load main search results
  */
-export function loadSearchResults(searchTerms) {
+export function loadRecipeSearchResult(searchTerms) {
   try {
     if (states.states.searchRecipe.terms.length < 3) {
       states.set("results", []);
@@ -172,9 +219,9 @@ export function loadSearchResults(searchTerms) {
 }
 
 /**
- *
+ * Load tag search results
  */
-export function loadSearchResultsByTag(searchTerms) {
+export function loadTagSearchResult(searchTerms) {
   try {
     const results = searchTag(
       createQuery(searchTerms),
@@ -191,6 +238,25 @@ export function loadSearchResultsByTag(searchTerms) {
     // 2/ getTagsResult pour type manquant A
     // 3/ update
     // 3/ getTagsResult pour type manquant B
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+/**
+ * Load recipe search results by tag
+ */
+export function loadRecipeSearchResultByTag() {
+  try {
+    const results = searchRecipeByTag();
+
+    // console.log("======loadRecipeSearchResultByTag", results);
+
+    states.set("recipeResult", results);
+    states.set(
+      "tagsResults",
+      getTagsResults(states.states.searchRecipe.recipeResults)
+    );
   } catch (err) {
     console.error(err);
   }
