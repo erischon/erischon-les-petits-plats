@@ -184,7 +184,12 @@ class handleStateChanges {
     } else if (sender === this.state && args.name === "selectedTag") {
       console.log(model.states.states.searchTag.selectedTags);
     } else if (sender === this.state && args.name === "terms") {
-      console.log(model.states.states.searchRecipe.terms);
+      if (model.states.states.activeTagsBox) {
+        // if terms number in global search is under 3, we reset the tagsResults
+        if (model.states.states.searchRecipe.terms.length < 3) {
+          model.states.set("tagsResults", model.states.states.tags);
+        }
+      }
     }
   }
 }
