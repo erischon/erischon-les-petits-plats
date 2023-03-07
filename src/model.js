@@ -119,36 +119,36 @@ function searchRecipe(query, recipes) {
 function searchRecipeByTag() {
   let updatedRecipeList = [];
   let updatedRecipeListByTag = [];
+  console.log("======update", updatedRecipeList);
 
   const recipeQuery = createQuery(states.states.searchRecipe.terms);
   const tagsQuery = createTagsQuery(states.states.searchTag.selectedTags);
 
   console.log(recipeQuery, tagsQuery);
 
-  // liaison entre recherche par tag et recherche par mot clé
-  // meilleure solution : créer une fonction qui va chercher les tags dans les recettes
+  if (states.states.searchRecipe.terms.length > 2) {
+    states.states.recipes.map((recipe) => {
+      if (
+        recipeQuery.test(recipe.name) ||
+        recipeQuery.test(recipe.description) ||
+        recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
+      ) {
+        updatedRecipeList.push(recipe);
+      }
+    });
+  }
 
-  states.states.recipes.map((recipe) => {
-    if (
-      recipeQuery.test(recipe.name) ||
-      recipeQuery.test(recipe.description) ||
-      recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
-    ) {
-      updatedRecipeList.push(recipe);
+  tagsQuery.map((tag) => {
+    if (tag.type === "ingredients") {
+      updatedRecipeList.map((recipe) => {
+        if (tag.query.test(recipe.ingredients.map((item) => item.ingredient))) {
+          updatedRecipeList.push(recipe);
+        }
+      });
     }
   });
 
-  updatedRecipeList.map((recipe) => {
-    if (
-      recipeQuery.test(recipe.name) ||
-      recipeQuery.test(recipe.description) ||
-      recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
-    ) {
-      updatedRecipeListByTag.push(recipe);
-    }
-  });
-
-  return updatedRecipeListByTag;
+  return updatedRecipeList;
 }
 
 /**
@@ -232,12 +232,6 @@ export function loadTagSearchResult(searchTerms) {
       type: states.states.activeTagsBox,
       results: results,
     });
-
-    // mettre à jour les autres keys :
-    // 1/ rechercher dans toutes les recipes par type
-    // 2/ getTagsResult pour type manquant A
-    // 3/ update
-    // 3/ getTagsResult pour type manquant B
   } catch (err) {
     console.error(err);
   }
@@ -250,13 +244,13 @@ export function loadRecipeSearchResultByTag() {
   try {
     const results = searchRecipeByTag();
 
-    // console.log("======loadRecipeSearchResultByTag", results);
+    console.log("======loadRecipeSearchResultByTag", results);
 
-    states.set("recipeResult", results);
-    states.set(
-      "tagsResults",
-      getTagsResults(states.states.searchRecipe.recipeResults)
-    );
+    // states.set("recipeResult", results);
+    // states.set(
+    //   "tagsResults",
+    //   getTagsResults(states.states.searchRecipe.recipeResults)
+    // );
   } catch (err) {
     console.error(err);
   }
@@ -273,3 +267,33 @@ async function initStates() {
 
 // init recipes
 initStates();
+
+// function searchRecipeByTag(query, recipes) {
+//   let updatedRecipeList = [];
+
+//   if (state.activeTagsBox === "ingredients") {
+//     recipes.map((recipe) => {
+//       if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
+//         updatedRecipeList.push(recipe);
+//       }
+//     });
+
+//     return updatedRecipeList;
+//   } else if (state.activeTagsBox === "appliances") {
+//     recipes.map((recipe) => {
+//       if (query.test(recipe.appliance)) {
+//         updatedRecipeList.push(recipe);
+//       }
+//     });
+
+//     return updatedRecipeList;
+//   } else if (state.activeTagsBox === "utensils") {
+//     recipes.map((recipe) => {
+//       if (query.test(recipe.ustensils.map((utensil) => utensil))) {
+//         updatedRecipeList.push(recipe);
+//       }
+//     });
+
+//     return updatedRecipeList;
+//   }
+// }
