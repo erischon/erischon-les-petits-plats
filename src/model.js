@@ -175,10 +175,6 @@ export function loadSearchResults(searchTerms) {
  *
  */
 export function loadSearchResultsByTag(searchTerms) {
-  console.log(
-    "======ma base de recherche",
-    states.states.searchRecipe.tagsResults
-  );
   try {
     const results = searchTag(
       createQuery(searchTerms),
@@ -189,9 +185,6 @@ export function loadSearchResultsByTag(searchTerms) {
       type: states.states.activeTagsBox,
       results: results,
     });
-
-    // console.log("======results", results);
-    console.log("======state searchByTag", states.states.searchTag.tagResults);
 
     // mettre à jour les autres keys :
     // 1/ rechercher dans toutes les recipes par type
