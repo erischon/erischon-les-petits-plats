@@ -110,7 +110,6 @@ function searchRecipe(query, recipes) {
 function searchTag(query, tags) {
   let updatedTagsList = [];
 
-  console.log("======recherche effective", tags[states.states.activeTagsBox]);
   tags[states.states.activeTagsBox].map((tag) => {
     if (query.test(tag)) {
       updatedTagsList.push(tag);
@@ -163,7 +162,6 @@ export function loadSearchResults(searchTerms) {
     );
 
     states.set("recipeResult", results);
-
     states.set(
       "tagsResults",
       getTagsResults(states.states.searchRecipe.recipeResults)
@@ -177,21 +175,23 @@ export function loadSearchResults(searchTerms) {
  *
  */
 export function loadSearchResultsByTag(searchTerms) {
+  console.log(
+    "======ma base de recherche",
+    states.states.searchRecipe.tagsResults
+  );
   try {
     const results = searchTag(
       createQuery(searchTerms),
-      states.states.searchTag.tagResults
+      states.states.searchRecipe.tagsResults
     );
-    console.log(
-      "======la recherche se fait dans:",
-      states.states.searchTag.tagResults
-    );
+
     states.set("searchByTagResults", {
       type: states.states.activeTagsBox,
       results: results,
     });
 
-    console.log("======results", results);
+    // console.log("======results", results);
+    console.log("======state searchByTag", states.states.searchTag.tagResults);
 
     // mettre à jour les autres keys :
     // 1/ rechercher dans toutes les recipes par type
@@ -210,7 +210,6 @@ async function initStates() {
   states.states.recipes = await getJSON();
   states.states.tags = getTagsResults(states.states.recipes);
   states.states.searchRecipe.tagsResults = states.states.tags;
-  states.states.searchTag.tagResults = states.states.tags;
 }
 
 // init recipes
