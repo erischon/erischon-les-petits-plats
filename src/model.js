@@ -1,4 +1,4 @@
-import { getJSON } from "./helpers";
+import { createTagId, getJSON } from "./helpers";
 
 import { Event, PropertyChangedArgs } from "./observer";
 
@@ -62,6 +62,23 @@ class State {
 
     this.valueChanged.fire(this, new PropertyChangedArgs(state, value));
   }
+
+  remove(state, value) {
+    switch (state) {
+      case "selectedTag":
+        const index = this.states.searchTag.selectedTags.findIndex(
+          (selectedTag) => selectedTag.id === value
+        );
+
+        delete this.states.searchTag.selectedTags[index];
+        // removing empty values
+        this.states.searchTag.selectedTags =
+          this.states.searchTag.selectedTags.filter((n) => n);
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 export const states = new State();
@@ -119,7 +136,7 @@ function searchRecipe(query, recipes) {
 function searchRecipeByTag() {
   let updatedRecipeList = [];
   let updatedRecipeListByTag = [];
-  console.log("======update", updatedRecipeList);
+  // console.log("======update", updatedRecipeList);
 
   const recipeQuery = createQuery(states.states.searchRecipe.terms);
   const tagsQuery = createTagsQuery(states.states.searchTag.selectedTags);
@@ -244,7 +261,7 @@ export function loadRecipeSearchResultByTag() {
   try {
     const results = searchRecipeByTag();
 
-    console.log("======loadRecipeSearchResultByTag", results);
+    // console.log("======loadRecipeSearchResultByTag", results);
 
     // states.set("recipeResult", results);
     // states.set(

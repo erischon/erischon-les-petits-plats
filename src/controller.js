@@ -8,6 +8,7 @@ import tagsContainerView from "./views/tagsContainerView";
 
 import { SearchByTagsViewFactory } from "./views/searchByTagsViewFactory";
 import { ResultsByTagsViewFactory } from "./views/resultsByTagsViewFactory";
+import { createTagId } from "./helpers";
 
 const TAGS_TYPES = ["ingredients", "appliances", "utensils"];
 
@@ -105,9 +106,14 @@ function controlTagSelection(e) {
   model.states.set("selectedTag", {
     type: model.states.states.activeTagsBox,
     tag: e.target.innerText,
+    id: createTagId(e.target.innerText),
   });
 
   controlSearchRecipeByTag();
+  console.log(
+    "======controlselectedTag",
+    model.states.states.searchTag.selectedTags
+  );
 }
 
 /**
@@ -132,6 +138,7 @@ function controlSearchRecipeByTag() {
  */
 function controlTagRemoving(event) {
   tagsContainerView.removeTag(event.currentTarget.id);
+  model.states.remove("selectedTag", event.currentTarget.id);
 }
 
 /**
