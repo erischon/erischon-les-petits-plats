@@ -73,7 +73,10 @@ function controlSearchResultsByTag() {
   try {
     // Get
     const query = searchByTagView.getQuery();
-    // appProxy.searchTag.terms[model.state.activeTagsBox] = query;
+    model.states.set("searchByTagTerms", {
+      type: model.states.states.activeTagsBox,
+      terms: query,
+    });
 
     if (!query) return;
 
@@ -81,8 +84,8 @@ function controlSearchResultsByTag() {
     model.loadSearchResultsByTag(query);
 
     // Render
-    resultsByTagView.render(model.states.states.searchTag.tagResults);
-    resultsByTagView.addHandlerTags(controlTags);
+    // resultsByTagView.render(model.states.states.searchTag.tagResults);
+    // resultsByTagView.addHandlerTags(controlTags);
   } catch (err) {
     console.error(`🛑⚡\nError controlSearchResultsByTag()\n${err}\n ⚡🛑`);
   }
@@ -184,11 +187,23 @@ class handleStateChanges {
     } else if (sender === this.state && args.name === "selectedTag") {
       console.log(model.states.states.searchTag.selectedTags);
     } else if (sender === this.state && args.name === "terms") {
+      // if there is an open Tags Box
       if (model.states.states.activeTagsBox) {
         // if terms number in global search is under 3, we reset the tagsResults
         if (model.states.states.searchRecipe.terms.length < 3) {
           model.states.set("tagsResults", model.states.states.tags);
         }
+      }
+    } else if (sender === this.state && args.name === "searchByTagResults") {
+      if (model.states.states.activeTagsBox) {
+        resultsByTagView.render(model.states.states.searchRecipe.tagsResults);
+        resultsByTagView.addHandlerTags(controlTags);
+        // pourquoi le render ne tient pas compte des changements de terms dans search ?
+        // quand le search est vide remettre à zero les tagsResults
+      }
+    } else if (sender === this.state && args.name === "searchByTagTerms") {
+      // if there is an open Tags Box
+      if (model.states.states.activeTagsBox) {
       }
     }
   }
