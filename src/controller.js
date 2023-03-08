@@ -97,20 +97,28 @@ function controlTagSearch() {
  * Control tag selection
  */
 function controlTagSelection(e) {
-  tagsContainerView.renderTag(
-    e.target.innerText,
-    model.states.states.activeTagsBox
+  const findSelectedTag = model.states.states.searchTag.selectedTags.find(
+    (item) => item.id === createTagId(e.target.innerText)
   );
-  tagsContainerView.addHandlerRemoveTag(controlTagRemoving);
-  searchByTagView.clearInput();
 
-  model.states.set("selectedTag", {
-    type: model.states.states.activeTagsBox,
-    tag: e.target.innerText,
-    id: createTagId(e.target.innerText),
-  });
+  if (!findSelectedTag) {
+    tagsContainerView.renderTag(
+      e.target.innerText,
+      model.states.states.activeTagsBox
+    );
+    tagsContainerView.addHandlerRemoveTag(controlTagRemoving);
+    searchByTagView.clearInput();
 
-  controlSearchRecipeByTag();
+    model.states.set("selectedTag", {
+      type: model.states.states.activeTagsBox,
+      tag: e.target.innerText,
+      id: createTagId(e.target.innerText),
+    });
+
+    controlSearchRecipeByTag();
+  } else {
+    return;
+  }
 }
 
 /**
