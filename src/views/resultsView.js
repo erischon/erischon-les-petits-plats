@@ -1,6 +1,6 @@
 class ResultsView {
   _parentEl = document.querySelector(".results");
-  _errorMessage = `No recipes found for your query! Please try again`;
+  _errorMessage = `Aucune recette ne correspond à votre critère... <br /> Vous pouvez chercher "tarte aux pommes", "poisson", etc...`;
 
   _data;
 
