@@ -18,6 +18,10 @@ export class SearchByIngredients extends SearchbyTagView {
 
     return query;
   }
+
+  clearInput() {
+    this._parentEl.querySelector(`.searchByTag__input--ingredients`).value = "";
+  }
 }
 
 export class SearchByAppliances extends SearchbyTagView {
@@ -30,6 +34,10 @@ export class SearchByAppliances extends SearchbyTagView {
 
     return query;
   }
+
+  clearInput() {
+    this._parentEl.querySelector(`.searchByTag__input--appliances`).value = "";
+  }
 }
 
 export class SearchByUtensils extends SearchbyTagView {
@@ -41,5 +49,9 @@ export class SearchByUtensils extends SearchbyTagView {
     ).value;
 
     return query;
+  }
+
+  clearInput() {
+    this._parentEl.querySelector(`.searchByTag__input--utensils`).value = "";
   }
 }

@@ -102,6 +102,7 @@ function controlTagSelection(e) {
     model.states.states.activeTagsBox
   );
   tagsContainerView.addHandlerRemoveTag(controlTagRemoving);
+  searchByTagView.clearInput();
 
   model.states.set("selectedTag", {
     type: model.states.states.activeTagsBox,
