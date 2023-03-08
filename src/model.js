@@ -78,6 +78,8 @@ class State {
       default:
         break;
     }
+
+    this.valueChanged.fire(this, new PropertyChangedArgs(state, value));
   }
 }
 
@@ -131,39 +133,50 @@ function searchRecipe(query, recipes) {
 }
 
 /**
- * Search recipes
+ * Search recipes by tags
  */
-function searchRecipeByTag() {
+function searchRecipeByTag(query, recipes, selectedTags) {
   let updatedRecipeList = [];
-  let updatedRecipeListByTag = [];
-  // console.log("======update", updatedRecipeList);
 
-  const recipeQuery = createQuery(states.states.searchRecipe.terms);
-  const tagsQuery = createTagsQuery(states.states.searchTag.selectedTags);
-
-  console.log(recipeQuery, tagsQuery);
-
-  if (states.states.searchRecipe.terms.length > 2) {
-    states.states.recipes.map((recipe) => {
+  if (query) {
+    recipes.map((recipe) => {
       if (
-        recipeQuery.test(recipe.name) ||
-        recipeQuery.test(recipe.description) ||
-        recipeQuery.test(recipe.ingredients.map((item) => item.ingredient))
+        query.test(recipe.name) ||
+        query.test(recipe.description) ||
+        query.test(recipe.ingredients.map((item) => item.ingredient))
       ) {
         updatedRecipeList.push(recipe);
       }
     });
   }
 
-  tagsQuery.map((tag) => {
-    if (tag.type === "ingredients") {
-      updatedRecipeList.map((recipe) => {
-        if (tag.query.test(recipe.ingredients.map((item) => item.ingredient))) {
-          updatedRecipeList.push(recipe);
-        }
-      });
+  if (selectedTags.length > 0) {
+    if (!updatedRecipeList.length) {
+      updatedRecipeList = states.states.recipes;
     }
-  });
+
+    selectedTags.map((tag) => {
+      const query = createQuery(tag.tag);
+
+      if (tag.type === "ingredients") {
+        updatedRecipeList = updatedRecipeList.filter((recipe) => {
+          return recipe.ingredients
+            .map((item) => item.ingredient.toLowerCase())
+            .includes(tag.tag.toLowerCase());
+        });
+      } else if (tag.type === "appliances") {
+        updatedRecipeList = updatedRecipeList.filter((recipe) => {
+          return recipe.appliance.toLowerCase() === tag.tag.toLowerCase();
+        });
+      } else if (tag.type === "utensils") {
+        updatedRecipeList = updatedRecipeList.filter((recipe) => {
+          return recipe.ustensils
+            .map((item) => item.toLowerCase())
+            .includes(tag.tag.toLowerCase());
+        });
+      }
+    });
+  }
 
   return updatedRecipeList;
 }
@@ -259,15 +272,17 @@ export function loadTagSearchResult(searchTerms) {
  */
 export function loadRecipeSearchResultByTag() {
   try {
-    const results = searchRecipeByTag();
+    const results = searchRecipeByTag(
+      createQuery(states.states.searchRecipe.terms),
+      states.states.recipes,
+      states.states.searchTag.selectedTags
+    );
 
-    // console.log("======loadRecipeSearchResultByTag", results);
-
-    // states.set("recipeResult", results);
-    // states.set(
-    //   "tagsResults",
-    //   getTagsResults(states.states.searchRecipe.recipeResults)
-    // );
+    states.set("recipeResult", results);
+    states.set(
+      "tagsResults",
+      getTagsResults(states.states.searchRecipe.recipeResults)
+    );
   } catch (err) {
     console.error(err);
   }
@@ -284,33 +299,3 @@ async function initStates() {
 
 // init recipes
 initStates();
-
-// function searchRecipeByTag(query, recipes) {
-//   let updatedRecipeList = [];
-
-//   if (state.activeTagsBox === "ingredients") {
-//     recipes.map((recipe) => {
-//       if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
-//         updatedRecipeList.push(recipe);
-//       }
-//     });
-
-//     return updatedRecipeList;
-//   } else if (state.activeTagsBox === "appliances") {
-//     recipes.map((recipe) => {
-//       if (query.test(recipe.appliance)) {
-//         updatedRecipeList.push(recipe);
-//       }
-//     });
-
-//     return updatedRecipeList;
-//   } else if (state.activeTagsBox === "utensils") {
-//     recipes.map((recipe) => {
-//       if (query.test(recipe.ustensils.map((utensil) => utensil))) {
-//         updatedRecipeList.push(recipe);
-//       }
-//     });
-
-//     return updatedRecipeList;
-//   }
-// }

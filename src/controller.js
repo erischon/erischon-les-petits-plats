@@ -110,10 +110,6 @@ function controlTagSelection(e) {
   });
 
   controlSearchRecipeByTag();
-  console.log(
-    "======controlselectedTag",
-    model.states.states.searchTag.selectedTags
-  );
 }
 
 /**
@@ -197,8 +193,7 @@ class handleStateChanges {
           }
           break;
         case "selectedTag":
-          // lancer une recherche dans les recipes avec le tag sélectionné
-
+          controlSearchRecipeByTag();
           break;
         default:
           break;
