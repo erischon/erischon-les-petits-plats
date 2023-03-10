@@ -119,15 +119,21 @@ function createTagsQuery(selectedTags) {
 function searchRecipe(query, recipes) {
   let updatedRecipeList = [];
 
-  recipes.map((recipe) => {
-    if (
-      query.test(recipe.name) ||
-      query.test(recipe.description) ||
-      query.test(recipe.ingredients.map((item) => item.ingredient))
-    ) {
+  for (let recipe of recipes) {
+    for (let ingredient of recipe.ingredients) {
+      if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
+        updatedRecipeList.push(recipe);
+      }
+    }
+
+    if (query.test(recipe.description)) {
       updatedRecipeList.push(recipe);
     }
-  });
+
+    if (query.test(recipe.name)) {
+      updatedRecipeList.push(recipe);
+    }
+  }
 
   return updatedRecipeList;
 }
