@@ -119,7 +119,7 @@ function createTagsQuery(selectedTags) {
 function searchRecipe(query, recipes) {
   let updatedRecipeList = [];
 
-  recipes.map((recipe) => {
+  recipes.forEach((recipe) => {
     if (
       query.test(recipe.name) ||
       query.test(recipe.description) ||
