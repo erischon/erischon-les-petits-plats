@@ -121,7 +121,7 @@ function searchRecipe(query, recipes) {
 
   let updatedRecipeList = [];
 
-  recipes.map((recipe) => {
+  recipes.forEach((recipe) => {
     if (
       query.test(recipe.name) ||
       query.test(recipe.description) ||
@@ -131,10 +131,10 @@ function searchRecipe(query, recipes) {
     }
   });
 
-  performance.mark("foreach-End");
+  performance.mark("forEach-end");
 
-  performance.measure("foreach", "forEach-start", "foreach-End");
-  console.log(performance.getEntriesByName("foreach"));
+  performance.measure("forEach", "forEach-start", "foreach-end");
+  console.log(performance.getEntriesByName("forEach"));
 
   return updatedRecipeList;
 }
