@@ -134,7 +134,10 @@ function searchRecipe(query, recipes) {
   performance.mark("forEach-end");
 
   performance.measure("forEach", "forEach-start", "forEach-end");
-  console.log(performance.getEntriesByName("forEach"));
+  console.log(
+    "Durations: ",
+    performance.getEntriesByName("forEach").map((item) => item.duration)
+  );
 
   return updatedRecipeList;
 }
