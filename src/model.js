@@ -117,9 +117,11 @@ function createTagsQuery(selectedTags) {
  * Search recipes
  */
 function searchRecipe(query, recipes) {
+  performance.mark("forEach-start");
+
   let updatedRecipeList = [];
 
-  recipes.forEach((recipe) => {
+  recipes.map((recipe) => {
     if (
       query.test(recipe.name) ||
       query.test(recipe.description) ||
@@ -128,6 +130,11 @@ function searchRecipe(query, recipes) {
       updatedRecipeList.push(recipe);
     }
   });
+
+  performance.mark("foreach-End");
+
+  performance.measure("foreach", "forEach-start", "foreach-End");
+  console.log(performance.getEntriesByName("foreach"));
 
   return updatedRecipeList;
 }
