@@ -117,6 +117,8 @@ function createTagsQuery(selectedTags) {
  * Search recipes
  */
 function searchRecipe(query, recipes) {
+  performance.mark("for-start");
+
   let updatedRecipeList = [];
 
   for (let recipe of recipes) {
@@ -134,6 +136,11 @@ function searchRecipe(query, recipes) {
       updatedRecipeList.push(recipe);
     }
   }
+
+  performance.mark("for-end");
+
+  performance.measure("for", "for-start", "for-end");
+  console.log(performance.getEntriesByName("for"));
 
   return updatedRecipeList;
 }
