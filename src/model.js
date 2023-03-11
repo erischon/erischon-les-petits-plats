@@ -140,7 +140,10 @@ function searchRecipe(query, recipes) {
   performance.mark("for-end");
 
   performance.measure("for", "for-start", "for-end");
-  console.log(performance.getEntriesByName("for"));
+  console.log(
+    "Durations: ",
+    performance.getEntriesByName("for").map((item) => item.duration)
+  );
 
   return updatedRecipeList;
 }
