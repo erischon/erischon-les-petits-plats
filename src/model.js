@@ -134,10 +134,12 @@ function searchRecipe(query, recipes) {
   performance.mark("forEach-end");
 
   performance.measure("forEach", "forEach-start", "forEach-end");
-  console.log(
-    "Durations: ",
-    performance.getEntriesByName("forEach").map((item) => item.duration)
-  );
+
+  const sum = performance
+    .getEntriesByName("forEach")
+    .reduce((a, b) => a + b.duration, 0);
+  const avg = sum / performance.getEntriesByName("forEach").length || 0;
+  console.log("Moyenne: ", avg);
 
   return updatedRecipeList;
 }
