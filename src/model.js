@@ -121,29 +121,31 @@ function searchRecipe(query, recipes) {
 
   let updatedRecipeList = [];
 
-  for (let recipe of recipes) {
-    for (let ingredient of recipe.ingredients) {
-      if (query.test(recipe.ingredients.map((item) => item.ingredient))) {
-        updatedRecipeList.push(recipe);
+  for (let i = 0; i < recipes.length; i++) {
+    if (query.test(recipes[i].name)) {
+      updatedRecipeList.push(recipes[i]);
+    }
+
+    if (query.test(recipes[i].description)) {
+      updatedRecipeList.push(recipes[i]);
+    }
+
+    for (let i = 0; i < recipes[i].ingredients; i++) {
+      if (query.test(recipes[i].ingredients.map((item) => item.ingredient))) {
+        updatedRecipeList.push(recipes[i]);
       }
-    }
-
-    if (query.test(recipe.description)) {
-      updatedRecipeList.push(recipe);
-    }
-
-    if (query.test(recipe.name)) {
-      updatedRecipeList.push(recipe);
     }
   }
 
   performance.mark("for-end");
 
   performance.measure("for", "for-start", "for-end");
-  console.log(
-    "Durations: ",
-    performance.getEntriesByName("for").map((item) => item.duration)
-  );
+
+  const sum = performance
+    .getEntriesByName("for")
+    .reduce((a, b) => a + b.duration, 0);
+  const avg = sum / performance.getEntriesByName("for").length || 0;
+  console.log("Moyenne: ", avg);
 
   return updatedRecipeList;
 }
