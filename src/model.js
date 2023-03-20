@@ -56,6 +56,9 @@ class State {
       case "searchByTagResults":
         this.states.searchTag.tagResults[value.type] = value.results;
         break;
+      case "results":
+        this.states.searchRecipe.recipeResults = value;
+        break;
       default:
         break;
     }
@@ -168,7 +171,7 @@ function searchRecipeByTag(query, recipes, selectedTags) {
     }
 
     selectedTags.forEach((tag) => {
-      const query = createQuery(tag.tag);
+      // const query = createQuery(tag.tag);
 
       if (tag.type === "ingredients") {
         updatedRecipeList = updatedRecipeList.filter((recipe) => {
