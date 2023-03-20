@@ -151,7 +151,7 @@ function searchRecipeByTag(query, recipes, selectedTags) {
   let updatedRecipeList = [];
 
   if (query) {
-    recipes.map((recipe) => {
+    recipes.forEach((recipe) => {
       if (
         query.test(recipe.name) ||
         query.test(recipe.description) ||
@@ -167,7 +167,7 @@ function searchRecipeByTag(query, recipes, selectedTags) {
       updatedRecipeList = states.states.recipes;
     }
 
-    selectedTags.map((tag) => {
+    selectedTags.forEach((tag) => {
       const query = createQuery(tag.tag);
 
       if (tag.type === "ingredients") {
