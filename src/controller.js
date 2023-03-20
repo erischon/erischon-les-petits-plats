@@ -170,6 +170,13 @@ class handleStateChanges {
           }
           break;
         case "terms":
+          if (
+            model.states.states.searchRecipe.terms.length < 3 &&
+            model.states.states.searchTag.selectedTags.length > 0
+          ) {
+            controlSearchRecipeByTag();
+          }
+
           // if there is an open Tags Box
           if (model.states.states.activeTagsBox) {
             // if terms number in global search is under 3, we reset the tagsResults
