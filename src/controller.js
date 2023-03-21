@@ -1,3 +1,5 @@
+import { getJSON } from "./helpers";
+
 import * as model from "./model";
 
 import searchView from "./views/searchView";
@@ -18,8 +20,13 @@ let resultsByTagView = {};
 /**
  * Init the app
  */
-function init() {
+async function init() {
   searchView.addHandlerSearch(controlRecipeSearch);
+
+  // A la demande de l'évaluateur pour afficher toutes les recettes par défaut
+  // A noter que je suis en désaccord avec cette demande car je pense qu'on n'affiche pas toutes les recettes par défaut dans un contexte où le client demande à avoir un affichage performant et rapide. Quid s'il y a 5000 recettes ? On affiche 5000 recettes par défaut ? Je pense que non. Je pense qu'on affiche par exemple les recettes les plus populaires par défaut. Mais bon, c'est une demande de l'évaluateur donc je l'ai fait.
+  model.states.set("recipeResult", await getJSON());
+  resultsView.render(model.states.states.searchRecipe.recipeResults);
 
   TAGS_TYPES.forEach((type) => {
     new TagsBoxView(type).addHandlerTagsBox(controlTagsBox);
